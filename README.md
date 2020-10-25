@@ -1,2 +1,16 @@
-# exampleapp
-example app
+# go-example
+
+example 
+
+# usage
+
+```
+air
+```
+
+# ergo usage
+
+```
+
+```
+
