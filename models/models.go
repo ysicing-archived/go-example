@@ -56,7 +56,6 @@ func Init() {
 	if err != nil {
 		logger.Slog.Exitf(-1, "setup db err: %v", err.Error())
 	}
-
 	dbcfg, _ := GDB.DB()
 	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
 	dbcfg.SetMaxIdleConns(10)
