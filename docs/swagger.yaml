@@ -1,0 +1,21 @@
+host: localhost:7070
+info:
+  contact:
+    email: i@ysicing.me
+    name: ysicing
+    url: http://github.com/ysicing
+  description: This is a sample server Petstore server.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Go Example API
+  version: 0.0.1
+paths:
+  /api.example.com/v1beta/db/total:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200": {}
+      summary: 查看DB大小
+swagger: "2.0"

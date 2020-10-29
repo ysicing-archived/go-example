@@ -12,12 +12,12 @@ RUN go get github.com/mitchellh/gox && make build
 
 FROM registry.cn-beijing.aliyuncs.com/k7scn/debian
 
-COPY --from=build /go/src/dist/go-example /root/go-example
+COPY hack/docker/server/run.sh /run.sh
 
-COPY static /root/static
+RUN chmod +x /run.sh && mkdir -p /conf /opt/go
 
-RUN chmod +x /root/go-example
+COPY --from=build /go/src/go-example /opt/go/example
 
-WORKDIR /root
+WORKDIR /opt/go
 
-ENTRYPOINT /root/go-example
+ENTRYPOINT /run.sh

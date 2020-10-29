@@ -8,9 +8,3 @@ example
 air
 ```
 
-# ergo usage
-
-```
-
-```
-

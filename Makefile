@@ -1,6 +1,6 @@
 BUILD_VERSION   ?= $(shell cat version.txt || echo "0.0.1")
 BUILD_DATE      := $(shell date "+%F %T")
-COMMIT_SHA1     := $(shell git rev-parse HEAD || echo "0.0.0")
+COMMIT_SHA1     := $(shell git rev-parse --short HEAD || echo "0.0.0")
 
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -27,7 +27,13 @@ fmt:
 
 default: fmt ## fmt code
 
-build: clean ## 构建二进制
+static: ## 构建ui
+	hack/build/genui.sh
+
+ui: static ## 将ui编译为go文件
+	hack/build/genui2go.sh
+
+build: clean ui ## 构建二进制
 	@echo "build bin ${BUILD_VERSION} ${BUILD_DATE} ${COMMIT_SHA1}"
 	#@bash hack/docker/build.sh ${version} ${tagversion} ${commit_sha1}
 	# go get github.com/mitchellh/gox
@@ -37,16 +43,19 @@ build: clean ## 构建二进制
                     -X 'app/cmd/command.release=${BUILD_VERSION}'"
 
 docker: ## 构建镜像
-	docker build -t goexample .
+	hack/build/genui.sh
+	hack/build/genui2go.sh
+	docker build -t goexample:${BUILD_VERSION}-${COMMIT_SHA1} -f hack/docker/server/Dockerfile  .
 
 clean: ## clean
 	rm -rf dist/*
+	rm -rf ui/dist
 
-install: clean ## install
-	go install \
-		-ldflags "-X 'app/cmd/command.commit=${COMMIT_SHA1}' \
-                                       -X 'app/cmd/command.date=${BUILD_DATE}' \
-                                       -X 'app/cmd/command.release=${BUILD_VERSION}'"
+#install: clean ## install
+#	go install \
+#		-ldflags "-X 'app/cmd/command.commit=${COMMIT_SHA1}' \
+#                                       -X 'app/cmd/command.date=${BUILD_DATE}' \
+#                                       -X 'app/cmd/command.release=${BUILD_VERSION}'"
 
 
 .PHONY : build release clean install

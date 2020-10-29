@@ -1,0 +1,31 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server Petstore server.",
+        "title": "Go Example API",
+        "contact": {
+            "name": "ysicing",
+            "url": "http://github.com/ysicing",
+            "email": "i@ysicing.me"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "0.0.1"
+    },
+    "host": "localhost:7070",
+    "paths": {
+        "/api.example.com/v1beta/db/total": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "查看DB大小",
+                "responses": {
+                    "200": {}
+                }
+            }
+        }
+    }
+}

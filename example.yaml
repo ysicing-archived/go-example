@@ -3,12 +3,18 @@ server:
   listen: "0.0.0.0:7070"
   agent: "0.0.0.0:8848"
 
+ui:
+  static_path:
+    - /css
+    - /js
+    - /fonts
+
 db:
-#  type: sqlite3
-#  dsn: example.db
+  type: sqlite3
+  dsn: example.db
   loglevel: debug
-  type: mysql
-  dsn: goopuer:zahhi7vaefeh4she1leey1aithoh1haB@tcp(127.0.0.1:3306)/goexample?charset=utf8mb4&parseTime=True&loc=Local
+#  type: mysql
+#  dsn: goopuer:zahhi7vaefeh4she1leey1aithoh1haB@tcp(127.0.0.1:3306)/goexample?charset=utf8mb4&parseTime=True&loc=Local
 
 cache:
   driver: redis

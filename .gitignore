@@ -18,3 +18,4 @@
 dist
 .idea
 .build
+ui/node_modules

@@ -4,6 +4,7 @@
 package routers
 
 import (
+	"app/assets"
 	"github.com/gin-gonic/gin"
 	"github.com/ysicing/ext/e"
 	"github.com/ysicing/ext/logger"
@@ -21,7 +22,7 @@ func init() {
 		})
 		// noroute
 		r.NoRoute(func(c *gin.Context) {
-			c.JSON(404, e.Error(c.Request.URL))
+			c.FileFromFS("/", assets.EmbedFS())
 		})
 		r.NoMethod(func(c *gin.Context) {
 			c.JSON(404, e.Error(c.Request.Method))
