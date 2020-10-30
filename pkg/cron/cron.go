@@ -16,7 +16,7 @@ type CronTasks struct {
 
 func (c *CronTasks) Start() {
 	logger.Slog.Info(exmisc.SGreen("start cron tasks"))
-	c.Cron.AddFunc("@every 10s", func() {
+	c.Cron.AddFunc("@every 1s", func() {
 		logger.Slog.Info(exos.GetHostname())
 	})
 	c.Cron.Start()

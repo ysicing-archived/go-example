@@ -9,17 +9,14 @@ import (
 	"app/pkg/gins"
 	"app/pkg/middleware"
 	"app/routers"
-	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/robfig/cron/v3"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ysicing/ext/httputil"
 	"github.com/ysicing/ext/logger"
 	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
 func ServerCommand() *cobra.Command {
@@ -54,7 +51,7 @@ func core(cmd *cobra.Command, args []string) {
 			logger.Slog.Fatal(err)
 		}
 	}()
-	SetupGracefulStop(srv)
+	httputil.SetupGracefulStop(srv)
 }
 
 func startTls(e *gin.Engine) {
@@ -72,29 +69,5 @@ func startTls(e *gin.Engine) {
 			logger.Slog.Fatal(err)
 		}
 	}()
-	SetupGracefulStop(srv)
-}
-
-func SetupGracefulStop(srv *http.Server) {
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
-	logger.Slog.Info("Shutdown Server ...")
-	Shutdown(srv)
-}
-
-func Shutdown(srv *http.Server) {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	if err := srv.Shutdown(ctx); err != nil {
-		logger.Slog.Info("[http server shutdown err:]", err)
-	}
-
-	select {
-	case <-ctx.Done():
-		logger.Slog.Info("[http server exit timeout of 5 seconds.]")
-	default:
-
-	}
-	logger.Slog.Info("[http server exited.]")
+	httputil.SetupGracefulStop(srv)
 }

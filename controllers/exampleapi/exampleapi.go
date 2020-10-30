@@ -21,7 +21,7 @@ func DBTotal(c *gin.Context) {
 	dbtype := viper.GetString("db.type")
 	dbdsn := viper.GetString("db.dsn")
 	if dbtype == "mysql" {
-		c.JSON(200, e.Error("不支持mysql"))
+		c.JSON(200, e.Error("10400", "不支持mysql"))
 		return
 	}
 	fi, err := os.Stat(dbdsn)
@@ -35,5 +35,5 @@ func DBTotal(c *gin.Context) {
 		}))
 		return
 	}
-	c.JSON(200, e.Error("文件不存在"))
+	c.JSON(200, e.Error("10400", "文件不存在"))
 }

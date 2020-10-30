@@ -5,16 +5,13 @@ package models
 
 import (
 	"github.com/spf13/viper"
+	"github.com/ysicing/ext/exlog/dblog"
 	"github.com/ysicing/ext/logger"
 	"github.com/ysicing/ext/utils/exmisc"
 	"gopkg.in/guregu/null.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	dblog "gorm.io/gorm/logger"
-	"log"
-	"os"
-	"strings"
 	"time"
 )
 
@@ -36,13 +33,8 @@ func Init() {
 	var err error
 	dbtype := viper.GetString("db.type")
 	dbdsn := viper.GetString("db.dsn")
-	newLogger := dblog.New(
-		log.New(os.Stdout, "\r\n", log.LstdFlags),
-		dblog.Config{
-			SlowThreshold: time.Second,
-			Colorful:      false,
-			LogLevel:      dblevel(),
-		})
+	dbmode := viper.GetBool("db.debug")
+	newLogger := dblog.New(logger.Slog, dbmode)
 	switch dbtype {
 	case "mysql":
 		GDB, err = gorm.Open(mysql.Open(dbdsn), &gorm.Config{
@@ -70,19 +62,4 @@ func Init() {
 		logger.Slog.Errorf("auto migrate table err: %v", err.Error())
 	}
 	logger.Slog.Info(exmisc.SGreen("create db engine success..."))
-}
-
-func dblevel() dblog.LogLevel {
-	switch strings.ToLower(viper.GetString("db.loglevel")) {
-	case "silent":
-		return dblog.Silent
-	case "info":
-		return dblog.Info
-	case "error":
-		return dblog.Error
-	case "warn":
-		return dblog.Warn
-	default:
-		return dblog.Silent
-	}
 }

@@ -17,7 +17,7 @@ ui:
 db:
   type: sqlite3
   dsn: example.db
-  loglevel: debug
+  debug: false
 #  type: mysql
 #  dsn: goopuer:zahhi7vaefeh4she1leey1aithoh1haB@tcp(127.0.0.1:3306)/goexample?charset=utf8mb4&parseTime=True&loc=Local
 
