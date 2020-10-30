@@ -2,6 +2,11 @@ server:
   debug: true
   listen: "0.0.0.0:7070"
   agent: "0.0.0.0:8848"
+  ssl:
+    enable: true
+    listen: "0.0.0.0:7071"
+    cert: test/ssl/facebook.cn+4.pem
+    key: test/ssl/facebook.cn+4-key.pem
 
 ui:
   static_path:

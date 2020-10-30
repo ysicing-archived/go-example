@@ -5,13 +5,7 @@ package main
 
 import (
 	"app/cmd"
-	"github.com/ysicing/ext/logger"
 )
-
-func init() {
-	logcfg := &logger.LogConfig{Simple: true}
-	logger.InitLogger(logcfg)
-}
 
 // @title Go Example API
 // @version 0.0.1

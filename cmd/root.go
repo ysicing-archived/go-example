@@ -6,13 +6,12 @@ package cmd
 import (
 	"app/cmd/command"
 	"app/pkg/utils"
-	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ysicing/ext/logger"
 	"github.com/ysicing/ext/utils/exmisc"
 	"github.com/ysicing/ext/utils/exos"
-	"os"
 )
 
 var rootCmd = &cobra.Command{
@@ -24,8 +23,7 @@ var rootCmd = &cobra.Command{
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		logger.Slog.Fatal(err)
 	}
 }
 
@@ -34,6 +32,8 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&command.CfgFile, "config", "", "config file (default is /conf/example.yml)")
 	rootCmd.PersistentFlags().BoolVar(&command.Debug, "debug", false, "enable debug logging")
 	rootCmd.AddCommand(command.NewVersionCommand(), command.ServerCommand())
+	logcfg := &logger.Config{Simple: true, ConsoleOnly: false}
+	logger.InitLogger(logcfg)
 }
 
 func initConfig() {
