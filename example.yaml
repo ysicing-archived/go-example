@@ -5,14 +5,15 @@ server:
   ssl:
     enable: true
     listen: "0.0.0.0:7071"
-    cert: test/ssl/facebook.cn+4.pem
-    key: test/ssl/facebook.cn+4-key.pem
+    cert: hack/ssl/go.example+3.pem
+    key: hack/ssl/go.example+3-key.pem
 
 ui:
   static_path:
     - /css
     - /js
     - /fonts
+    - /img
 
 db:
   type: sqlite3

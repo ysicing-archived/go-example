@@ -42,6 +42,50 @@ var doc = `{
                     "200": {}
                 }
             }
+        },
+        "/api.ext/v1/err500": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "errpage",
+                "responses": {
+                    "500": {}
+                }
+            }
+        },
+        "/api.ext/v1/errpanic": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "errpanic",
+                "responses": {
+                    "500": {}
+                }
+            }
+        },
+        "/api.ext/v1/health": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "health",
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/api.ext/v1/version": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "version",
+                "responses": {
+                    "200": {}
+                }
+            }
         }
     }
 }`

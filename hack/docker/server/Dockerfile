@@ -4,19 +4,21 @@ WORKDIR /go/src
 
 ENV GOPROXY=https://goproxy.cn,direct
 
-RUN apt update && apt install build-essential -y
-
 COPY . /go/src/
 
-RUN go get github.com/mitchellh/gox && make build
+RUN make build
 
 FROM registry.cn-beijing.aliyuncs.com/k7scn/debian
 
 COPY hack/docker/server/run.sh /run.sh
 
-RUN chmod +x /run.sh && mkdir -p /conf /opt/go
+RUN chmod +x /run.sh && mkdir -p /conf /opt/go/hack
 
-COPY --from=build /go/src/go-example /opt/go/example
+COPY example.yaml /conf/example.yaml
+
+COPY hack/ssl /opt/go/hack/ssl
+
+COPY --from=build /go/src/dist/go-example /opt/go/go-example
 
 WORKDIR /opt/go
 

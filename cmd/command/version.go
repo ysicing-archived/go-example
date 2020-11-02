@@ -4,14 +4,9 @@
 package command
 
 import (
+	"app/constants"
 	"fmt"
 	"github.com/spf13/cobra"
-)
-
-var (
-	commit  = "unknown"
-	date    = "unknown"
-	release = "unknown"
 )
 
 func NewVersionCommand() *cobra.Command {
@@ -23,5 +18,5 @@ func NewVersionCommand() *cobra.Command {
 }
 
 func versionCommandFunc(cmd *cobra.Command, args []string) {
-	fmt.Printf("release: %s, build date: %s, commit: %s", release, date, commit)
+	fmt.Printf("release: %s, build date: %s, commit: %s", constants.Release, constants.Date, constants.Commit)
 }

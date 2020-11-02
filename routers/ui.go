@@ -33,5 +33,8 @@ func init() {
 			rg.HEAD(urlPattern, handler)
 		}
 
+		r.NoRoute(func(c *gin.Context) {
+			c.FileFromFS("/", assets.EmbedFS())
+		})
 	})
 }

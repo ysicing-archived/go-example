@@ -33,16 +33,20 @@ static: ## 构建ui
 ui: static ## 将ui编译为go文件
 	hack/build/genui2go.sh
 
-build: clean ui ## 构建二进制
+docs: ## docs
+	hack/build/gendocs.sh
+
+build: ## 构建二进制
 	@echo "build bin ${BUILD_VERSION} ${BUILD_DATE} ${COMMIT_SHA1}"
 	#@bash hack/docker/build.sh ${version} ${tagversion} ${commit_sha1}
 	# go get github.com/mitchellh/gox
 	@CGO_ENABLED=1 GOARCH=amd64 go build -o dist/go-example \
-    	-ldflags   "-X 'app/cmd/command.commit=${COMMIT_SHA1}' \
-                    -X 'app/cmd/command.date=${BUILD_DATE}' \
-                    -X 'app/cmd/command.release=${BUILD_VERSION}'"
+    	-ldflags   "-X 'app/constants/constants.Commit=${COMMIT_SHA1}' \
+                    -X 'app/constants/constants.Date=${BUILD_DATE}' \
+                    -X 'app/constants/constants.Release=${BUILD_VERSION}'"
 
 docker: ## 构建镜像
+	hack/build/gendocs.sh
 	hack/build/genui.sh
 	hack/build/genui2go.sh
 	docker build -t goexample:${BUILD_VERSION}-${COMMIT_SHA1} -f hack/docker/server/Dockerfile  .
@@ -51,14 +55,7 @@ clean: ## clean
 	rm -rf dist/*
 	rm -rf ui/dist
 
-#install: clean ## install
-#	go install \
-#		-ldflags "-X 'app/cmd/command.commit=${COMMIT_SHA1}' \
-#                                       -X 'app/cmd/command.date=${BUILD_DATE}' \
-#                                       -X 'app/cmd/command.release=${BUILD_VERSION}'"
-
-
-.PHONY : build release clean install
+.PHONY : build release clean
 
 .EXPORT_ALL_VARIABLES:
 

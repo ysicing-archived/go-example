@@ -18,4 +18,32 @@ paths:
       responses:
         "200": {}
       summary: 查看DB大小
+  /api.ext/v1/err500:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "500": {}
+      summary: errpage
+  /api.ext/v1/errpanic:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "500": {}
+      summary: errpanic
+  /api.ext/v1/health:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200": {}
+      summary: health
+  /api.ext/v1/version:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200": {}
+      summary: version
 swagger: "2.0"
