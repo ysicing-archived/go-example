@@ -1,0 +1,157 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: exampledb
+  namespace: gaea-op
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: custom-data-db
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: examplecfg
+  namespace: gaea-op
+data:
+  config: |-
+    server:
+      debug: true
+      listen: "0.0.0.0:7070"
+      agent: "0.0.0.0:8848"
+      ssl:
+        enable: true
+        listen: "0.0.0.0:7071"
+        cert: hack/ssl/go.example+3.pem
+        key: hack/ssl/go.example+3-key.pem
+
+    ui:
+      static_path:
+        - /css
+        - /js
+        - /fonts
+        - /img
+
+    db:
+      type: sqlite3
+      dsn: /data/example.db
+      debug: false
+    #  type: mysql
+    #  dsn: goopuer:zahhi7vaefeh4she1leey1aithoh1haB@tcp(127.0.0.1:3306)/goexample?charset=utf8mb4&parseTime=True&loc=Local
+
+    cache:
+      driver: redis
+      host: 127.0.0.1:6379
+    #  pass: ""
+
+    event:
+      tg: token
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: gaea-op
+  labels:
+    app: example
+    version: 0.0.1
+  name: example
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+        - name: example
+          image: example
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7070
+              name: http-7070
+              protocol: TCP
+            - containerPort: 8848
+              name: http-8848
+              protocol: TCP
+            - containerPort: 7071
+              name: https-7071
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 125Mi
+          volumeMounts:
+            - mountPath: /conf
+              name: examplecfg
+              readOnly: true
+            - mountPath: /data/
+              name: exampledb
+      dnsPolicy: Default
+      restartPolicy: Always
+      volumes:
+        - name: exampledb
+          persistentVolumeClaim:
+            claimName: exampledb
+        - configMap:
+            name: examplecfg
+            defaultMode: 420
+            items:
+              - key: config
+                path: example.yaml
+          name: examplecfg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example
+  namespace: gaea-op
+spec:
+  ports:
+    - port: 7070
+      name: http-7070
+      protocol: TCP
+      targetPort: 7070
+    - port: 8848
+      name: http-8848
+      protocol: TCP
+      targetPort: 8848
+    - port: 7071
+      name: https-7071
+      protocol: TCP
+      targetPort: 7071
+  selector:
+    app: example
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: example
+  namespace: gaea-op
+spec:
+  rules:
+    - host: example.bj-internal.ops.com
+      http:
+        paths:
+          - backend:
+              serviceName: example
+              servicePort: http-7070
+            path: /
+  tls:
+    - hosts:
+        - example.bj-internal.ops.com
+      secretName: tls-ops-com-prod
