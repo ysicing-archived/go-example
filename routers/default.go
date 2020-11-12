@@ -6,6 +6,7 @@ package routers
 import (
 	"app/controllers/ops/health"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/ysicing/ext/e"
 )
 
@@ -22,5 +23,8 @@ func init() {
 		r.NoMethod(func(c *gin.Context) {
 			c.JSON(404, e.Error(10404, c.Request.Method))
 		})
+	})
+	register("metrics.api", func(r *gin.Engine) {
+		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	})
 }

@@ -4,6 +4,7 @@
 package cron
 
 import (
+	"app/pkg/prom"
 	"github.com/robfig/cron/v3"
 	"github.com/ysicing/ext/logger"
 	"github.com/ysicing/ext/utils/exmisc"
@@ -18,6 +19,7 @@ func (c *CronTasks) Start() {
 	logger.Slog.Info(exmisc.SGreen("start cron tasks"))
 	c.Cron.AddFunc("@every 1s", func() {
 		logger.Slog.Info(exos.GetHostname())
+		prom.CronRunTimesCounter.WithLabelValues("default_1s").Inc()
 	})
 	c.Cron.Start()
 }

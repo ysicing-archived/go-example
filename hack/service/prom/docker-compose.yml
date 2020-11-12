@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  prometheus:
+    image: registry.cn-beijing.aliyuncs.com/k7scn/prometheus:2-debian-10
+    volumes:
+    - ./prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
+    ports:
+      - '29090:9090'
