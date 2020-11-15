@@ -15,35 +15,62 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       responses:
         "200": {}
+      security:
+      - ApiKeyAuth: []
       summary: 查看DB大小
-  /api.ext/v1/err500:
+      tags:
+      - 示例API
+  /err500:
     get:
       consumes:
       - application/json
       responses:
         "500": {}
       summary: errpage
-  /api.ext/v1/errpanic:
+      tags:
+      - Health
+  /errpanic:
     get:
       consumes:
       - application/json
       responses:
         "500": {}
       summary: errpanic
-  /api.ext/v1/health:
+      tags:
+      - Health
+  /gentoken:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200": {}
+      summary: 生成测试Token
+      tags:
+      - Health
+  /health:
     get:
       consumes:
       - application/json
       responses:
         "200": {}
       summary: health
-  /api.ext/v1/version:
+      tags:
+      - Health
+  /version:
     get:
       consumes:
       - application/json
       responses:
         "200": {}
       summary: version
+      tags:
+      - Health
 swagger: "2.0"

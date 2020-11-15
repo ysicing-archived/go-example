@@ -34,19 +34,39 @@ var doc = `{
     "paths": {
         "/api.example.com/v1beta/db/total": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
+                "tags": [
+                    "示例API"
+                ],
                 "summary": "查看DB大小",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {}
                 }
             }
         },
-        "/api.ext/v1/err500": {
+        "/err500": {
             "get": {
                 "consumes": [
                     "application/json"
+                ],
+                "tags": [
+                    "Health"
                 ],
                 "summary": "errpage",
                 "responses": {
@@ -54,10 +74,13 @@ var doc = `{
                 }
             }
         },
-        "/api.ext/v1/errpanic": {
+        "/errpanic": {
             "get": {
                 "consumes": [
                     "application/json"
+                ],
+                "tags": [
+                    "Health"
                 ],
                 "summary": "errpanic",
                 "responses": {
@@ -65,10 +88,27 @@ var doc = `{
                 }
             }
         },
-        "/api.ext/v1/health": {
+        "/gentoken": {
             "get": {
                 "consumes": [
                     "application/json"
+                ],
+                "tags": [
+                    "Health"
+                ],
+                "summary": "生成测试Token",
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health"
                 ],
                 "summary": "health",
                 "responses": {
@@ -76,10 +116,13 @@ var doc = `{
                 }
             }
         },
-        "/api.ext/v1/version": {
+        "/version": {
             "get": {
                 "consumes": [
                     "application/json"
+                ],
+                "tags": [
+                    "Health"
                 ],
                 "summary": "version",
                 "responses": {

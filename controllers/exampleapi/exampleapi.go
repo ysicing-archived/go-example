@@ -14,7 +14,10 @@ import (
 
 // @Summary 查看DB大小
 // @version 0.0.1
+// @Tags 示例API
 // @Accept application/json
+// @Param Authorization header string true "token"
+// @Security ApiKeyAuth
 // @Success 200
 // @Router /api.example.com/v1beta/db/total [get]
 func DBTotal(c *gin.Context) {

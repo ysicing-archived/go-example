@@ -11,9 +11,19 @@ import (
 	"time"
 )
 
-// JWTAuth jwt auth
-func JWTAuth() gin.HandlerFunc {
+func init() {
+	registerWithWeight("auth", 80, func() gin.HandlerFunc {
+		return auth()
+	})
+}
+
+// auth jwt auth
+func auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		if !strings.Contains(c.Request.URL.Path, "/api") {
+			c.Next()
+			return
+		}
 		bearerToken := c.Request.Header.Get("Authorization")
 		if !strings.HasPrefix(bearerToken, "Bearer ") || len(strings.Fields(bearerToken)) != 2 {
 			c.JSON(http.StatusUnauthorized, gin.H{

@@ -29,7 +29,11 @@ export default {
   },
   methods: {
     fetchDBTotal(){
-      axios({method: 'GET', url: '/api.example.com/v1beta/db/total'}).then(response => {
+      axios({
+        method: 'GET',
+        url: '/api.example.com/v1beta/db/total',
+        headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTE4MzQ3MjcsInVzZXJuYW1lIjoiYWRtaW4ifQ.4uxYnbh2NKo_zkkn-RLPrx9xoE-ebiOsGm0yv9doSmg'},
+      }).then(response => {
         this.info = response.data
       })
     }

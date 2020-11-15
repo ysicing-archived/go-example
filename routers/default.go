@@ -11,20 +11,15 @@ import (
 )
 
 func init() {
-	register("ext.api", func(r *gin.Engine) {
-		extapi := r.Group("/api.ext")
-
-		v1 := extapi.Group("/v1")
-		v1.GET("/health", health.Health)
-		v1.GET("/version", health.RVersion)
-		v1.GET("/err500", health.Err500)
-		v1.GET("/errpanic", health.ErrPanic)
-
+	register("default.api", func(r *gin.Engine) {
+		r.GET("/health", health.Health)
+		r.GET("/version", health.RVersion)
+		r.GET("/err500", health.Err500)
+		r.GET("/errpanic", health.ErrPanic)
+		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
+		r.GET("/gentoken", health.GenToken)
 		r.NoMethod(func(c *gin.Context) {
 			c.JSON(404, e.Error(10404, c.Request.Method))
 		})
-	})
-	register("metrics.api", func(r *gin.Engine) {
-		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	})
 }
