@@ -4,8 +4,8 @@
 package jwt
 
 import (
-	"github.com/pkg/errors"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 	"time"
 )

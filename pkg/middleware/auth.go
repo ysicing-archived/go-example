@@ -35,7 +35,7 @@ func JWTAuth() gin.HandlerFunc {
 			return
 		}
 		info := map[string]string{
-			"username":   claims["username"].(string),
+			"username": claims["username"].(string),
 		}
 		// c.SetCookie("username", claims["username"].(string), viper.GetInt("server.cookie"), "/", ".ysicing.local", true, true)
 		c.Set("userinfo", info)

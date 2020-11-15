@@ -8,10 +8,12 @@ import (
 	"github.com/ysicing/ext/exlog/dblog"
 	"github.com/ysicing/ext/logger"
 	"github.com/ysicing/ext/utils/exmisc"
+	"github.com/ysicing/ext/utils/extime"
 	"gopkg.in/guregu/null.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/plugin/prometheus"
 	"time"
 )
 
@@ -44,6 +46,20 @@ func Init() {
 		GDB, err = gorm.Open(sqlite.Open(dbdsn), &gorm.Config{
 			Logger: newLogger,
 		})
+	}
+	if viper.GetBool("db.metrics.enable") {
+		dbname := viper.GetString("db.metrics.name")
+		if len(dbname) == 0 {
+			dbname = "example" + extime.GetToday()
+		}
+		GDB.Use(prometheus.New(prometheus.Config{
+			DBName: dbname,
+			//RefreshInterval:  0,
+			//PushAddr:         "",
+			//StartServer:      false,
+			//HTTPServerPort:   0,
+			//MetricsCollector: nil,
+		}))
 	}
 	if err != nil {
 		logger.Slog.Exitf(-1, "setup db err: %v", err.Error())

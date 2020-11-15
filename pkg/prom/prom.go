@@ -17,8 +17,8 @@ var (
 	}, []string{"client_ip"})
 	CronRunTimesCounter = prometheus.NewCounterVec(prometheus.CounterOpts{
 		Namespace: ns,
-		Name: "cron_run_time",
-		Help: "cron执行次数",
+		Name:      "cron_run_time",
+		Help:      "cron执行次数",
 	}, []string{"name"})
 )
 
