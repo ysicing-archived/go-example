@@ -7,8 +7,10 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.6.3
+	github.com/go-playground/validator/v10 v10.4.0 // indirect
 	github.com/golang/protobuf v1.4.3
 	github.com/google/gops v0.3.12
+	github.com/mattn/go-sqlite3 v1.14.4 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.8.0
 	github.com/rakyll/statik v0.1.7
@@ -18,7 +20,7 @@ require (
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.6.9
-	github.com/ysicing/ext v0.0.0-20201109070235-9c52c8bb9d30
+	github.com/ysicing/ext v0.0.0-20201116103538-c0a587035879
 	google.golang.org/grpc v1.27.0
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/guregu/null.v3 v3.5.0
