@@ -18,7 +18,6 @@ import (
 // @license.name MIT
 // @license.url https://opensource.org/licenses/MIT
 
-// @host localhost:7070
 func main() {
 	cmd.Execute()
 }
