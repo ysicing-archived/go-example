@@ -4,12 +4,11 @@
 package exampleapi
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/ysicing/ext/e"
+	"github.com/ysicing/ext/utils/exfile"
 	"github.com/ysicing/ext/utils/extime"
-	"os"
 )
 
 // @Summary 查看DB大小
@@ -27,14 +26,11 @@ func DBTotal(c *gin.Context) {
 		c.JSON(200, e.Error(10400, "不支持mysql"))
 		return
 	}
-	fi, err := os.Stat(dbdsn)
-	if err == nil {
-		bs := float64(fi.Size())
-		kbs := bs / 1024.0
-		mbs := kbs / 1024.0
+	dbres := exfile.FileSize2Str(dbdsn)
+	if len(dbres) != 0 {
 		c.JSON(200, e.Done(map[string]interface{}{
 			"timestamp": extime.NowFormat(),
-			"size":      fmt.Sprintf("%vM", mbs),
+			"size":      dbres,
 		}))
 		return
 	}

@@ -32,7 +32,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&command.CfgFile, "config", "", "config file (default is /conf/example.yml)")
 	rootCmd.PersistentFlags().BoolVar(&command.Debug, "debug", false, "enable debug logging")
 	rootCmd.AddCommand(command.NewVersionCommand(), command.ServerCommand())
-	logcfg := &logger.Config{Simple: true, ConsoleOnly: false}
+	logcfg := &logger.Config{Simple: true, ConsoleOnly: false, JsonFormat: true}
 	logger.InitLogger(logcfg)
 }
 

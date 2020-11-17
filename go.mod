@@ -20,7 +20,7 @@ require (
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.6.9
-	github.com/ysicing/ext v0.0.0-20201116140951-3c0c6327f6c4
+	github.com/ysicing/ext v0.0.0-20201117051416-1324250575d3
 	google.golang.org/grpc v1.27.0
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/guregu/null.v3 v3.5.0

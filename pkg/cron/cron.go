@@ -19,7 +19,7 @@ func (c *CronTasks) Start() {
 	logger.Slog.Info(exmisc.SGreen("start cron tasks"))
 	c.Cron.AddFunc("@every 30s", func() {
 		logger.Slog.Info(exos.GetHostname())
-		prom.CronRunTimesCounter.WithLabelValues("default_30s").Inc()
+		prom.CronRunTimesCounter.WithLabelValues("default_cron").Inc()
 	})
 	c.Cron.Start()
 }
