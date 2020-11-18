@@ -1,4 +1,4 @@
-FROM registry.cn-beijing.aliyuncs.com/k7scn/dgo AS build
+FROM registry.cn-beijing.aliyuncs.com/k7scn/god AS build
 
 WORKDIR /go/src
 

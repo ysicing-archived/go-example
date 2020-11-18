@@ -7,10 +7,8 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.6.3
-	github.com/go-playground/validator/v10 v10.4.0 // indirect
 	github.com/golang/protobuf v1.4.3
 	github.com/google/gops v0.3.12
-	github.com/mattn/go-sqlite3 v1.14.4 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.8.0
 	github.com/rakyll/statik v0.1.7
