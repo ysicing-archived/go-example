@@ -1,15 +1,20 @@
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: exampledb
+#  namespace: gaea-op
+#spec:
+#  accessModes:
+#    - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: 2Gi
+#  storageClassName: custom-data-db
+---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: Namespace
 metadata:
-  name: exampledb
-  namespace: gaea-op
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 2Gi
-  storageClassName: custom-data-db
+  name: gaea-op
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -75,7 +80,7 @@ spec:
     spec:
       containers:
         - name: example
-          image: example
+          image: goexample:0.0.1
           imagePullPolicy: Always
           ports:
             - containerPort: 7070
@@ -104,8 +109,9 @@ spec:
       restartPolicy: Always
       volumes:
         - name: exampledb
-          persistentVolumeClaim:
-            claimName: exampledb
+          emptyDir: {}
+#          persistentVolumeClaim:
+#            claimName: exampledb
         - configMap:
             name: examplecfg
             defaultMode: 420

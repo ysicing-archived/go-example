@@ -12,7 +12,7 @@ import (
 
 var jwtSecret []byte
 
-func JwtAuth(username string) (t string, err error) {
+func JwtAuth(username string, role ...string) (t string, err error) {
 	var expSecond int
 	now := time.Now()
 	expSecond = viper.GetInt("jwt.expsecond")
@@ -27,6 +27,13 @@ func JwtAuth(username string) (t string, err error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["username"] = username
+
+	if len(role) > 0 {
+		claims["role"] = role[0]
+	} else {
+		claims["role"] = "viewer"
+	}
+
 	claims["exp"] = now.Add(time.Duration(expSecond) * time.Second).Unix()
 	t, err = token.SignedString(jwtSecret)
 	if err != nil {

@@ -31,4 +31,8 @@ cache:
 #  pass: ""
 
 event:
-  tg: token
+  tg:
+    enable: true
+    token:
+    adminuid:
+    channame:

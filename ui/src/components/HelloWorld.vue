@@ -32,7 +32,7 @@ export default {
       axios({
         method: 'GET',
         url: '/api.example.com/v1beta/db/total',
-        headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTE4MzQ3MjcsInVzZXJuYW1lIjoiYWRtaW4ifQ.4uxYnbh2NKo_zkkn-RLPrx9xoE-ebiOsGm0yv9doSmg'},
+        headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTMxNTA2NjQsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.Hd3giIhtp1pPRcjMmsRKF6HHUFqyRKTESZC2acwmeaw'},
       }).then(response => {
         this.info = response.data
       })

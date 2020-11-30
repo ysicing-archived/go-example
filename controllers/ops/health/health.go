@@ -65,7 +65,7 @@ func ErrPanic(c *gin.Context) {
 // @Success 200
 // @Router /gentoken [get]
 func GenToken(c *gin.Context) {
-	token, _ := jwt.JwtAuth("admin")
+	token, _ := jwt.JwtAuth("admin", "admin")
 	c.JSON(200, e.Done(map[string]interface{}{
 		"user":  "admin",
 		"token": fmt.Sprintf("Bearer %v", token),

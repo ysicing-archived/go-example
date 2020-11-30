@@ -5,10 +5,11 @@ package middleware
 
 import (
 	"app/pkg/jwt"
+	"app/pkg/rbac"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/storyicon/grbac"
+	"github.com/ysicing/ext/e"
 	"strings"
-	"time"
 )
 
 func init() {
@@ -17,38 +18,50 @@ func init() {
 	})
 }
 
+func authrole(c *gin.Context) (roles []string, err error) {
+	bearerToken := c.Request.Header.Get("Authorization")
+	if !strings.HasPrefix(bearerToken, "Bearer ") || len(strings.Fields(bearerToken)) != 2 {
+		return nil, nil
+	}
+	token := strings.Fields(bearerToken)[1]
+
+	claims, err := jwt.JwtParse(token)
+	if err != nil {
+		return nil, err
+	}
+	role := claims["role"].(string)
+	info := map[string]string{
+		"username": claims["username"].(string),
+		"role":     role,
+	}
+	c.Set("userinfo", info)
+	return []string{role}, nil
+}
+
 // auth jwt auth
 func auth() gin.HandlerFunc {
+	rbacrule, err := grbac.New(grbac.WithRules(rbac.Rules()))
+	if err != nil {
+		panic(err)
+	}
 	return func(c *gin.Context) {
-		if !strings.Contains(c.Request.URL.Path, "/api") {
-			c.Next()
-			return
-		}
-		bearerToken := c.Request.Header.Get("Authorization")
-		if !strings.HasPrefix(bearerToken, "Bearer ") || len(strings.Fields(bearerToken)) != 2 {
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"message":   "Invalid  Token",
-				"timestamp": time.Now().Unix(),
-			})
-			c.Abort()
-			return
-		}
-		token := strings.Fields(bearerToken)[1]
-
-		claims, err := jwt.JwtParse(token)
+		roles, err := authrole(c)
 		if err != nil {
-			c.JSON(http.StatusForbidden, gin.H{
-				"message":   err.Error(),
-				"timestamp": time.Now().Unix(),
-			})
+			c.JSON(200, e.Error(10403, "token不合法"))
 			c.Abort()
 			return
 		}
-		info := map[string]string{
-			"username": claims["username"].(string),
+		state, err := rbacrule.IsRequestGranted(c.Request, roles)
+		if err != nil {
+			c.JSON(200, e.Error(10400, "权限校验失败"))
+			c.Abort()
+			return
 		}
-		// c.SetCookie("username", claims["username"].(string), viper.GetInt("server.cookie"), "/", ".ysicing.local", true, true)
-		c.Set("userinfo", info)
+		if !state.IsGranted() {
+			c.JSON(200, e.Error(10401, ""))
+			c.Abort()
+			return
+		}
 		c.Next()
 	}
 }
