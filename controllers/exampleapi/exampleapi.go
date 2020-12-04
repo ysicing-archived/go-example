@@ -18,7 +18,7 @@ import (
 // @Param Authorization header string true "token"
 // @Security ApiKeyAuth
 // @Success 200
-// @Router /api.example.com/v1beta/db/total [get]
+// @Router /apis/example.dev/v1beta/db/total [get]
 func DBTotal(c *gin.Context) {
 	dbtype := viper.GetString("db.type")
 	dbdsn := viper.GetString("db.dsn")

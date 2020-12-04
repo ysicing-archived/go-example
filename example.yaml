@@ -27,8 +27,9 @@ db:
 
 cache:
   driver: redis
-  host: 127.0.0.1:6379
-#  pass: ""
+  host: 127.0.0.1
+  port: 6379
+  pass: ""
 
 event:
   tg:

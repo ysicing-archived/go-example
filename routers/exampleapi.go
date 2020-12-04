@@ -10,7 +10,7 @@ import (
 
 func init() {
 	register("exampleapi", func(r *gin.Engine) {
-		rg := r.Group("/api.example.com")
+		rg := r.Group("/apis/example.dev")
 		rg.GET("/v1beta/db/total", exampleapi.DBTotal)
 	})
 }

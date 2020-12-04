@@ -6,15 +6,10 @@ package prom
 import "github.com/prometheus/client_golang/prometheus"
 
 const (
-	ns = "gin"
+	ns = "app"
 )
 
 var (
-	VisitsGauge = prometheus.NewGaugeVec(prometheus.GaugeOpts{
-		Name:      "visit",
-		Namespace: ns,
-		Help:      "请求次数",
-	}, []string{"client_ip"})
 	CronRunTimesCounter = prometheus.NewCounterVec(prometheus.CounterOpts{
 		Namespace: ns,
 		Name:      "cron_run_time",
@@ -23,5 +18,5 @@ var (
 )
 
 func init() {
-	prometheus.MustRegister(VisitsGauge, CronRunTimesCounter)
+	prometheus.MustRegister(CronRunTimesCounter)
 }

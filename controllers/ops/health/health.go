@@ -6,6 +6,7 @@ package health
 import (
 	"app/constants"
 	"app/pkg/jwt"
+	"app/pkg/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/ysicing/ext/e"
@@ -15,7 +16,7 @@ import (
 // @Summary health
 // @version 0.0.1
 // @Accept application/json
-// @Tags Health
+// @Tags 默认
 // @Success 200
 // @Router /health [get]
 func Health(c *gin.Context) {
@@ -25,7 +26,7 @@ func Health(c *gin.Context) {
 // @Summary version
 // @version 0.0.1
 // @Accept application/json
-// @Tags Health
+// @Tags 默认
 // @Success 200
 // @Router /version [get]
 func RVersion(c *gin.Context) {
@@ -39,7 +40,7 @@ func RVersion(c *gin.Context) {
 // @Summary errpage
 // @version 0.0.1
 // @Accept application/json
-// @Tags Health
+// @Tags 默认
 // @Success 500
 // @Router /err500 [get]
 func Err500(c *gin.Context) {
@@ -50,7 +51,7 @@ func Err500(c *gin.Context) {
 // @Summary errpanic
 // @version 0.0.1
 // @Accept application/json
-// @Tags Health
+// @Tags 默认
 // @Success 500
 // @Router /errpanic [get]
 func ErrPanic(c *gin.Context) {
@@ -58,16 +59,27 @@ func ErrPanic(c *gin.Context) {
 	c.JSON(500, e.Error(10500, "Test panic err by Gins!"))
 }
 
+type User struct {
+	UserName string `json:"username" form:"username"`
+	UserRole string `json:"userrole" form:"userrole"`
+}
+
 // @Summary 生成测试Token
 // @version 0.0.1
-// @Tags Health
+// @Tags 默认
 // @Accept application/json
+// @Param user body User true "用户信息"
 // @Success 200
-// @Router /gentoken [get]
+// @Router /gentoken [post]
 func GenToken(c *gin.Context) {
-	token, _ := jwt.JwtAuth("admin", "admin")
+	var user User
+	if !utils.BindAndValid(c, &user) {
+		c.JSON(200, e.Error(10400, "校验数据失败"))
+		return
+	}
+	token, _ := jwt.JwtAuth(user.UserName, user.UserRole)
 	c.JSON(200, e.Done(map[string]interface{}{
-		"user":  "admin",
+		"user":  user,
 		"token": fmt.Sprintf("Bearer %v", token),
 	}))
 }

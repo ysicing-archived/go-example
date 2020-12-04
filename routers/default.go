@@ -17,7 +17,7 @@ func init() {
 		r.GET("/err500", health.Err500)
 		r.GET("/errpanic", health.ErrPanic)
 		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
-		r.GET("/gentoken", health.GenToken)
+		r.POST("/gentoken", health.GenToken)
 		r.NoMethod(func(c *gin.Context) {
 			c.JSON(404, e.Error(10404, c.Request.Method))
 		})

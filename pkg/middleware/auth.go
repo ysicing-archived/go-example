@@ -45,6 +45,10 @@ func auth() gin.HandlerFunc {
 		panic(err)
 	}
 	return func(c *gin.Context) {
+		if !strings.HasPrefix(c.Request.URL.Path, "/api") {
+			c.Next()
+			return
+		}
 		roles, err := authrole(c)
 		if err != nil {
 			c.JSON(200, e.Error(10403, "token不合法"))
@@ -58,7 +62,7 @@ func auth() gin.HandlerFunc {
 			return
 		}
 		if !state.IsGranted() {
-			c.JSON(200, e.Error(10401, ""))
+			c.JSON(200, e.Error(10401, "暂无权限"))
 			c.Abort()
 			return
 		}

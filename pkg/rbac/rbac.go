@@ -22,8 +22,20 @@ func Rules() grbac.Rules {
 		{
 			ID: 100, // 越大，优先级最高
 			Resource: &grbac.Resource{
-				Host:   "/swagger/**",
-				Path:   "127.0.0.1:7070",
+				Host:   "*",
+				Path:   "/swagger/**",
+				Method: "*",
+			},
+			Permission: &grbac.Permission{
+				AuthorizedRoles: []string{"*"},
+				AllowAnyone:     true,
+			},
+		},
+		{
+			ID: 100, // 越大，优先级最高
+			Resource: &grbac.Resource{
+				Host:   "/api/**",
+				Path:   "**",
 				Method: "*",
 			},
 			Permission: &grbac.Permission{
@@ -33,7 +45,7 @@ func Rules() grbac.Rules {
 		{
 			ID: 100, // 越大，优先级最高
 			Resource: &grbac.Resource{
-				Host:   "/api/**",
+				Host:   "/apis/**",
 				Path:   "**",
 				Method: "*",
 			},

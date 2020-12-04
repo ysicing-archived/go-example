@@ -31,7 +31,7 @@ export default {
     fetchDBTotal(){
       axios({
         method: 'GET',
-        url: '/api.example.com/v1beta/db/total',
+        url: '/apis/example.dev/v1beta/db/total',
         headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTMxNTA2NjQsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.Hd3giIhtp1pPRcjMmsRKF6HHUFqyRKTESZC2acwmeaw'},
       }).then(response => {
         this.info = response.data

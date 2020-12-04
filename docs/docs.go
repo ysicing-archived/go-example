@@ -32,7 +32,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api.example.com/v1beta/db/total": {
+        "/apis/example.dev/v1beta/db/total": {
             "get": {
                 "security": [
                     {
@@ -66,7 +66,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Health"
+                    "默认"
                 ],
                 "summary": "errpage",
                 "responses": {
@@ -80,7 +80,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Health"
+                    "默认"
                 ],
                 "summary": "errpanic",
                 "responses": {
@@ -89,14 +89,25 @@ var doc = `{
             }
         },
         "/gentoken": {
-            "get": {
+            "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "tags": [
-                    "Health"
+                    "默认"
                 ],
                 "summary": "生成测试Token",
+                "parameters": [
+                    {
+                        "description": "用户信息",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/health.User"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {}
                 }
@@ -108,7 +119,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Health"
+                    "默认"
                 ],
                 "summary": "health",
                 "responses": {
@@ -122,11 +133,24 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Health"
+                    "默认"
                 ],
                 "summary": "version",
                 "responses": {
                     "200": {}
+                }
+            }
+        }
+    },
+    "definitions": {
+        "health.User": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "userrole": {
+                    "type": "string"
                 }
             }
         }
