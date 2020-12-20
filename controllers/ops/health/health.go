@@ -5,11 +5,11 @@ package health
 
 import (
 	"app/constants"
+	"app/pkg/errors"
+	"app/pkg/gins"
 	"app/pkg/jwt"
-	"app/pkg/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/ysicing/ext/e"
 	"github.com/ysicing/ext/logger"
 )
 
@@ -20,7 +20,7 @@ import (
 // @Success 200
 // @Router /health [get]
 func Health(c *gin.Context) {
-	c.JSON(200, e.Done("I am ok."))
+	gins.GinsData(c,"I am ok." , 200, nil)
 }
 
 // @Summary version
@@ -30,11 +30,11 @@ func Health(c *gin.Context) {
 // @Success 200
 // @Router /version [get]
 func RVersion(c *gin.Context) {
-	c.JSON(200, e.Done(map[string]string{
+	gins.GinsData(c, map[string]string{
 		"builddate": constants.Date,
 		"release":   constants.Release,
 		"gitcommit": constants.Commit,
-	}))
+	}, 200, nil)
 }
 
 // @Summary errpage
@@ -45,7 +45,7 @@ func RVersion(c *gin.Context) {
 // @Router /err500 [get]
 func Err500(c *gin.Context) {
 	logger.Slog.Error("too long err")
-	c.JSON(500, e.Error(10500, "500 Err by Gins!"))
+	errors.Bomb("500 Err by Gins!")
 }
 
 // @Summary errpanic
@@ -56,7 +56,7 @@ func Err500(c *gin.Context) {
 // @Router /errpanic [get]
 func ErrPanic(c *gin.Context) {
 	panic("panic_err")
-	c.JSON(500, e.Error(10500, "Test panic err by Gins!"))
+	errors.Bomb("Test panic err by Gins!")
 }
 
 type User struct {
@@ -73,13 +73,11 @@ type User struct {
 // @Router /gentoken [post]
 func GenToken(c *gin.Context) {
 	var user User
-	if !utils.BindAndValid(c, &user) {
-		c.JSON(200, e.Error(10400, "校验数据失败"))
-		return
-	}
+	gins.BindAndValid(c, &user)
 	token, _ := jwt.JwtAuth(user.UserName, user.UserRole)
-	c.JSON(200, e.Done(map[string]interface{}{
+	data := map[string]interface{}{
 		"user":  user,
 		"token": fmt.Sprintf("Bearer %v", token),
-	}))
+	}
+	gins.GinsData(c, data, 200, nil)
 }

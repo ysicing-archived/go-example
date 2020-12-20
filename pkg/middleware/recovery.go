@@ -4,6 +4,9 @@
 package middleware
 
 import (
+	"app/pkg/errors"
+	"app/pkg/gins"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/ysicing/ext/logger"
 	"net"
@@ -26,6 +29,13 @@ func recovery() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
+				// custom err
+				if errresp, ok := err.(errors.DefaultError); ok {
+					// c.JSON(200, gin.H{"message": errresp.Message})
+					gins.GinsData(c, nil, 10400, fmt.Errorf(errresp.Message))
+					c.Abort()
+					return
+				}
 				var brokenPipe bool
 				if ne, ok := err.(*net.OpError); ok {
 					if se, ok := ne.Err.(*os.SyscallError); ok {
@@ -45,6 +55,7 @@ func recovery() gin.HandlerFunc {
 
 				logger.Slog.Errorf("Recovery from panic ---> err: %v, request: %v, stack: %v", err, string(httpRequest), string(debug.Stack()))
 				c.AbortWithStatus(http.StatusInternalServerError)
+				//gins.GinsData(c, nil, 10500, fmt.Errorf("StatusInternalServerError"))
 			}
 		}()
 		c.Next()

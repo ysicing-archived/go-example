@@ -7,9 +7,9 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.6.3
-	github.com/google/gops v0.3.13
+	github.com/google/gops v0.3.14
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.8.0
+	github.com/prometheus/client_golang v1.9.0
 	github.com/rakyll/statik v0.1.7
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/spf13/cobra v1.1.1
@@ -18,10 +18,10 @@ require (
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.6.9
-	github.com/ysicing/ext v0.0.0-20201117051416-1324250575d3
+	github.com/ysicing/ext v0.0.0-20201215110233-f154cb6815c6
 	gopkg.in/guregu/null.v3 v3.5.0
 	gorm.io/driver/mysql v1.0.3
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.20.8
-	gorm.io/plugin/prometheus v0.0.0-20201123040306-fc3b256e154f
+	gorm.io/plugin/prometheus v0.0.0-20201218072646-c1eee1a373e9
 )

@@ -4,9 +4,10 @@
 package exampleapi
 
 import (
+	"app/pkg/errors"
+	"app/pkg/gins"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"github.com/ysicing/ext/e"
 	"github.com/ysicing/ext/utils/exfile"
 	"github.com/ysicing/ext/utils/extime"
 )
@@ -23,16 +24,16 @@ func DBTotal(c *gin.Context) {
 	dbtype := viper.GetString("db.type")
 	dbdsn := viper.GetString("db.dsn")
 	if dbtype == "mysql" {
-		c.JSON(200, e.Error(10400, "不支持mysql"))
+		errors.Dangerous("不支持mysql")
 		return
 	}
 	dbres := exfile.FileSize2Str(dbdsn)
 	if len(dbres) != 0 {
-		c.JSON(200, e.Done(map[string]interface{}{
+		gins.GinsData(c, map[string]interface{}{
 			"timestamp": extime.NowFormat(),
 			"size":      dbres,
-		}))
+		}, 200, nil)
 		return
 	}
-	c.JSON(200, e.Error(10400, "文件不存在"))
+	errors.Dangerous("文件不存在")
 }
