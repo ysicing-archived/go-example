@@ -4,8 +4,8 @@
 package jwt
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/pkg/errors"
 	"strings"
 	"time"
 )
@@ -40,7 +40,7 @@ func JwtAuth(username string, role ...string) (t string, err error) {
 	claims["exp"] = now.Add(time.Duration(expSecond) * time.Second).Unix()
 	t, err = token.SignedString(jwtSecret)
 	if err != nil {
-		return "", errors.New("JWT Generate Failure")
+		return "", fmt.Errorf("JWT Generate Failure")
 	}
 	return t, nil
 }
@@ -50,7 +50,7 @@ func JwtParse(tokenstring string) (jwt.MapClaims, error) {
 		return jwtSecret, nil
 	})
 	if err != nil || !token.Valid {
-		return nil, errors.New("Token invalid")
+		return nil, fmt.Errorf("Token invalid")
 	}
 	claim := token.Claims.(jwt.MapClaims)
 	return claim, nil

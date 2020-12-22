@@ -11,11 +11,6 @@ import (
 	"time"
 )
 
-const (
-	errLogFormat = "requestid %v => %v | %v | %v | %v | %v | %v <= err: %v"
-	logFormat    = "requestid %v => %v | %v | %v | %v | %v | %v "
-)
-
 func init() {
 	registerWithWeight("log", 100, func() gin.HandlerFunc {
 		return log()
@@ -35,7 +30,7 @@ func log() gin.HandlerFunc {
 			query = " - "
 		}
 		if latency > time.Second*2 {
-			logger.Slog.Hookf("[msg] api %v query %v", path, latency)
+			logger.Slog.Warnf("[msg] api %v query %v", path, latency)
 		}
 		if len(c.Errors) > 0 || c.Writer.Status() >= 500 {
 			logger.Slog.Infof("requestid %v => %v | %v | %v | %v | %v | %v <= err: %v", ginmid.GetRequestID(c), exmisc.SRed("%v", c.Writer.Status()), c.ClientIP(), c.Request.Method, path, query, latency, c.Errors.String())

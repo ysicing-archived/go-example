@@ -8,7 +8,6 @@ import (
 	"app/pkg/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
 	"github.com/ysicing/ext/logger"
 	"github.com/ysicing/ext/utils/exmisc"
 	"sort"
@@ -44,7 +43,7 @@ func register(name string, handlerFunc func() gin.HandlerFunc) {
 func registerWithWeight(name string, weight int, handlerFunc func() gin.HandlerFunc) {
 
 	if weight > 100 || weight < 0 {
-		utils.CheckAndExit(errors.New(fmt.Sprintf("middleware weight must be >= 0 and <=100")))
+		utils.CheckAndExit(fmt.Errorf("middleware weight must be >= 0 and <=100"))
 	}
 
 	mw := middleware{
