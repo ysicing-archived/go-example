@@ -16,11 +16,11 @@ require (
 	github.com/storyicon/grbac v0.0.0-20200224041032-a0461737df7e
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.0
-	github.com/swaggo/swag v1.6.9
-	github.com/ysicing/ext v0.0.0-20201215110233-f154cb6815c6
+	github.com/swaggo/swag v1.7.0
+	github.com/ysicing/ext v0.0.0-20210216072601-48e212069500
 	gopkg.in/guregu/null.v3 v3.5.0
-	gorm.io/driver/mysql v1.0.3
+	gorm.io/driver/mysql v1.0.4
 	gorm.io/driver/sqlite v1.1.4
-	gorm.io/gorm v1.20.8
-	gorm.io/plugin/prometheus v0.0.0-20201218072646-c1eee1a373e9
+	gorm.io/gorm v1.20.12
+	gorm.io/plugin/prometheus v0.0.0-20210201030325-2d0d2f250610
 )

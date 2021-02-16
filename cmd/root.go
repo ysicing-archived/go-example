@@ -5,55 +5,55 @@ package cmd
 
 import (
 	"app/cmd/command"
-	"app/pkg/utils"
+	"app/constants"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/ysicing/ext/logger"
-	"github.com/ysicing/ext/utils/exmisc"
-	"github.com/ysicing/ext/utils/exos"
+	"github.com/ysicing/ext/logger/zlog"
+	"github.com/ysicing/ext/misc"
+	"github.com/ysicing/ext/zos"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "example",
-	Short: "go example by ysicing",
-	Long: `Go example by ysicing.
+var (
+	rootCmd = &cobra.Command{
+		Use:   "example",
+		Short: "go example by ysicing",
+		Long: `Go example by ysicing.
 `,
-}
-
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		logger.Slog.Fatal(err)
 	}
+)
+
+func Execute() error {
+	return rootCmd.Execute()
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVar(&command.CfgFile, "config", "", "config file (default is /conf/example.yml)")
-	rootCmd.PersistentFlags().BoolVar(&command.Debug, "debug", false, "enable debug logging")
+	rootCmd.PersistentFlags().StringVar(&constants.CfgFile, "config", "", "config file (default is /conf/example.yml)")
+	rootCmd.PersistentFlags().BoolVar(&constants.Debug, "debug", false, "enable debug logging")
 	rootCmd.AddCommand(command.NewVersionCommand(), command.ServerCommand())
-	logcfg := &logger.Config{Simple: true, ConsoleOnly: false, JsonFormat: true}
-	logger.InitLogger(logcfg)
+	logcfg := &zlog.Config{Simple: true, WriteLog: false, WriteJSON: true, ServiceName: "example"}
+	zlog.InitZlog(logcfg)
 }
 
 func initConfig() {
-	if command.CfgFile == "" {
-		command.CfgFile = command.Defaultcfgpath
-		if exos.IsMacOS() {
-			command.CfgFile = "./example.yaml"
+	if constants.CfgFile == "" {
+		constants.CfgFile = constants.Defaultcfgpath
+		if zos.IsMacOS() {
+			constants.CfgFile = "./example.yaml"
 		}
 	}
-	viper.SetConfigFile(command.CfgFile)
+	viper.SetConfigFile(constants.CfgFile)
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err == nil {
-		utils.ShowDebugMsg("Using config file:", exmisc.SGreen(viper.ConfigFileUsed()))
+		zlog.Debug("Using config file: %v", misc.SGreen(viper.ConfigFileUsed()))
 	}
 	// reload
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
-		utils.ShowDebugMsg("config changed: ", exmisc.SGreen(in.Name))
+		zlog.Debug("config changed: %v", misc.SGreen(in.Name))
 	})
-	if command.Debug {
+	if constants.Debug {
 		viper.Set("server.debug", true)
 	}
 }

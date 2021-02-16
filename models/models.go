@@ -5,10 +5,10 @@ package models
 
 import (
 	"github.com/spf13/viper"
-	"github.com/ysicing/ext/exlog/dblog"
-	"github.com/ysicing/ext/logger"
-	"github.com/ysicing/ext/utils/exmisc"
-	"github.com/ysicing/ext/utils/extime"
+	"github.com/ysicing/ext/logger/dblog"
+	"github.com/ysicing/ext/logger/zlog"
+	"github.com/ysicing/ext/misc"
+	"github.com/ysicing/ext/ztime"
 	"gopkg.in/guregu/null.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
@@ -36,7 +36,7 @@ func Init() {
 	dbtype := viper.GetString("db.type")
 	dbdsn := viper.GetString("db.dsn")
 	dbmode := viper.GetBool("db.debug")
-	newLogger := dblog.New(logger.Slog, dbmode)
+	newLogger := dblog.New(zlog.Zlog, dbmode)
 	switch dbtype {
 	case "mysql":
 		GDB, err = gorm.Open(mysql.Open(dbdsn), &gorm.Config{
@@ -47,10 +47,13 @@ func Init() {
 			Logger: newLogger,
 		})
 	}
+	if err != nil {
+		zlog.Panic("setup db err: %v", err.Error())
+	}
 	if viper.GetBool("db.metrics.enable") {
 		dbname := viper.GetString("db.metrics.name")
 		if len(dbname) == 0 {
-			dbname = "example" + extime.GetToday()
+			dbname = "example" + ztime.GetToday()
 		}
 		GDB.Use(prometheus.New(prometheus.Config{
 			DBName: dbname,
@@ -60,9 +63,6 @@ func Init() {
 			//HTTPServerPort:   0,
 			//MetricsCollector: nil,
 		}))
-	}
-	if err != nil {
-		logger.Slog.Fatalf("setup db err: %v", err.Error())
 	}
 	dbcfg, _ := GDB.DB()
 	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
@@ -75,7 +75,7 @@ func Init() {
 	dbcfg.SetConnMaxLifetime(time.Hour)
 
 	if err := GDB.AutoMigrate(Migrates...); err != nil {
-		logger.Slog.Errorf("auto migrate table err: %v", err.Error())
+		zlog.Error("auto migrate table err: %v", err.Error())
 	}
-	logger.Slog.Info(exmisc.SGreen("create db engine success..."))
+	zlog.Info(misc.SGreen("create db engine success..."))
 }

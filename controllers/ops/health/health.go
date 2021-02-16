@@ -5,12 +5,12 @@ package health
 
 import (
 	"app/constants"
-	"app/pkg/errors"
-	"app/pkg/gins"
 	"app/pkg/jwt"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/ysicing/ext/logger"
+	"github.com/ysicing/ext/exgin"
+	"github.com/ysicing/ext/gerr"
+	"github.com/ysicing/ext/logger/zlog"
 )
 
 // @Summary health
@@ -20,7 +20,7 @@ import (
 // @Success 200
 // @Router /health [get]
 func Health(c *gin.Context) {
-	gins.GinsData(c,"I am ok." , 200, nil)
+	exgin.GinsData(c, "I am ok.", nil)
 }
 
 // @Summary version
@@ -30,11 +30,11 @@ func Health(c *gin.Context) {
 // @Success 200
 // @Router /version [get]
 func RVersion(c *gin.Context) {
-	gins.GinsData(c, map[string]string{
+	exgin.GinsData(c, map[string]string{
 		"builddate": constants.Date,
 		"release":   constants.Release,
 		"gitcommit": constants.Commit,
-	}, 200, nil)
+	}, nil)
 }
 
 // @Summary errpage
@@ -44,8 +44,8 @@ func RVersion(c *gin.Context) {
 // @Success 500
 // @Router /err500 [get]
 func Err500(c *gin.Context) {
-	logger.Slog.Error("too long err")
-	errors.Bomb("500 Err by Gins!")
+	zlog.Error("too long err")
+	gerr.Bomb("500 Err by Gins!")
 }
 
 // @Summary errpanic
@@ -56,7 +56,7 @@ func Err500(c *gin.Context) {
 // @Router /errpanic [get]
 func ErrPanic(c *gin.Context) {
 	panic("panic_err")
-	errors.Bomb("Test panic err by Gins!")
+	gerr.Bomb("Test panic err by Gins!")
 }
 
 type User struct {
@@ -73,11 +73,11 @@ type User struct {
 // @Router /gentoken [post]
 func GenToken(c *gin.Context) {
 	var user User
-	gins.BindAndValid(c, &user)
+	exgin.Bind(c, &user)
 	token, _ := jwt.JwtAuth(user.UserName, user.UserRole)
 	data := map[string]interface{}{
 		"user":  user,
 		"token": fmt.Sprintf("Bearer %v", token),
 	}
-	gins.GinsData(c, data, 200, nil)
+	exgin.GinsData(c, data, nil)
 }

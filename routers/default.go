@@ -5,9 +5,10 @@ package routers
 
 import (
 	"app/controllers/ops/health"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/ysicing/ext/e"
+	"github.com/ysicing/ext/exgin"
 )
 
 func init() {
@@ -19,7 +20,10 @@ func init() {
 		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 		r.POST("/gentoken", health.GenToken)
 		r.NoMethod(func(c *gin.Context) {
-			c.JSON(404, e.Error(10404, c.Request.Method))
+			exgin.GinsAbort(c, fmt.Sprintf("not fount: %v", c.Request.Method))
+		})
+		r.NoRoute(func(c *gin.Context) {
+			exgin.GinsAbort(c, fmt.Sprintf("not fount: %v", c.Request.URL.Path))
 		})
 	})
 }

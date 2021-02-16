@@ -4,7 +4,7 @@
 package models
 
 import (
-	"app/pkg/utils"
+	"github.com/ysicing/ext/logger/zlog"
 	"gorm.io/gorm"
 )
 
@@ -28,12 +28,12 @@ func init() {
 func (u *User) New() *User {
 	tx := GDB.Save(&u)
 	if tx.Error != nil {
-		utils.ShowDebugMsg("添加人员save: %v, err: %v", u.Username, tx.Error.Error())
+		zlog.Debug("添加人员save: %v, err: %v", u.Username, tx.Error.Error())
 		return nil
 	}
 	var nw User
 	if err := tx.Row().Scan(&nw); err != nil {
-		utils.ShowDebugMsg("添加人员scan: %v, err: %v", u.Username, err.Error())
+		zlog.Debug("添加人员scan: %v, err: %v", u.Username, err.Error())
 		return nil
 	}
 	return &nw

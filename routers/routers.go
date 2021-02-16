@@ -8,8 +8,8 @@ import (
 	"app/pkg/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/ysicing/ext/logger"
-	"github.com/ysicing/ext/utils/exmisc"
+	"github.com/ysicing/ext/logger/zlog"
+	"github.com/ysicing/ext/misc"
 	"sort"
 	"strings"
 	"sync"
@@ -70,8 +70,8 @@ func Init() {
 		sort.Sort(routers)
 		for _, r := range routers {
 			r.Func(gins.Gins)
-			utils.ShowDebugMsg(exmisc.SGreen("load router [%s] success...", r.Name))
+			zlog.Debug(misc.SGreen("load router [%s] success...", r.Name))
 		}
-		logger.Slog.Infof(exmisc.SGreen("load router success..."))
+		zlog.Info(misc.SGreen("load router success..."))
 	})
 }

@@ -13,8 +13,8 @@ import (
 	"github.com/robfig/cron/v3"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/ysicing/ext/httputil"
-	"github.com/ysicing/ext/logger"
+	"github.com/ysicing/ext/exhttp"
+	"github.com/ysicing/ext/logger/zlog"
 	"net/http"
 	"os"
 )
@@ -45,13 +45,13 @@ func core(cmd *cobra.Command, args []string) {
 		go startTls(gins.Gins)
 	}
 	go func() {
-		logger.Slog.Infof("http listen to %v, pid is %v", addr, os.Getpid())
+		zlog.Info("http listen to %v, pid is %v", addr, os.Getpid())
 		//	utils.CheckAndExit(gins.Gins.Run(addr))
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logger.Slog.Fatal(err)
+			zlog.Fatal("err: %v", err)
 		}
 	}()
-	httputil.SetupGracefulStop(srv)
+	exhttp.SetupGracefulStop(srv)
 }
 
 func startTls(e *gin.Engine) {
@@ -63,11 +63,11 @@ func startTls(e *gin.Engine) {
 	tlscfile := viper.GetString("server.ssl.cert")
 	tlskfile := viper.GetString("server.ssl.key")
 	go func() {
-		logger.Slog.Infof("tls listen to %v, pid is %v", tlsaddr, os.Getpid())
+		zlog.Info("tls listen to %v, pid is %v", tlsaddr, os.Getpid())
 
 		if err := srv.ListenAndServeTLS(tlscfile, tlskfile); err != nil && err != http.ErrServerClosed {
-			logger.Slog.Fatal(err)
+			zlog.Fatal("err: %v", err)
 		}
 	}()
-	httputil.SetupGracefulStop(srv)
+	exhttp.SetupGracefulStop(srv)
 }

@@ -8,7 +8,7 @@ import (
 	"app/pkg/rbac"
 	"github.com/gin-gonic/gin"
 	"github.com/storyicon/grbac"
-	"github.com/ysicing/ext/e"
+	"github.com/ysicing/ext/exgin"
 	"strings"
 )
 
@@ -51,19 +51,16 @@ func auth() gin.HandlerFunc {
 		}
 		roles, err := authrole(c)
 		if err != nil {
-			c.JSON(200, e.Error(10403, "token不合法"))
-			c.Abort()
+			exgin.GinsAbort(c, "token不合法")
 			return
 		}
 		state, err := rbacrule.IsRequestGranted(c.Request, roles)
 		if err != nil {
-			c.JSON(200, e.Error(10400, "权限校验失败"))
-			c.Abort()
+			exgin.GinsAbort(c, "权限校验失败")
 			return
 		}
 		if !state.IsGranted() {
-			c.JSON(200, e.Error(10401, "暂无权限"))
-			c.Abort()
+			exgin.GinsAbort(c, "暂无权限")
 			return
 		}
 		c.Next()

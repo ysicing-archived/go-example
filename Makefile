@@ -33,7 +33,7 @@ static: ## 构建ui
 ui: static ## 将ui编译为go文件
 	hack/build/genui2go.sh
 
-docs: ## docs
+doc: ## doc
 	hack/build/gendocs.sh
 
 build: ## 构建二进制

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$1" = "bash" -o "$1" = "sh" ]; then
+if [ "$1" = "bash" ]; then
   exec /bin/bash
 fi
 

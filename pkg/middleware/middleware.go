@@ -8,8 +8,8 @@ import (
 	"app/pkg/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/ysicing/ext/logger"
-	"github.com/ysicing/ext/utils/exmisc"
+	"github.com/ysicing/ext/logger/zlog"
+	"github.com/ysicing/ext/misc"
 	"sort"
 )
 
@@ -59,7 +59,7 @@ func Init() {
 	sort.Sort(mws)
 	for _, mw := range mws {
 		gins.Gins.Use(mw.HandlerFunc())
-		utils.ShowDebugMsg("load middleware ", mw.Name)
+		zlog.Debug("load middleware: %v", mw.Name)
 	}
-	logger.Slog.Info(exmisc.SGreen("load middleware success..."))
+	zlog.Info(misc.SGreen("load middleware success..."))
 }

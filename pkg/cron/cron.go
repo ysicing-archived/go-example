@@ -6,9 +6,9 @@ package cron
 import (
 	"app/pkg/prom"
 	"github.com/robfig/cron/v3"
-	"github.com/ysicing/ext/logger"
-	"github.com/ysicing/ext/utils/exmisc"
-	"github.com/ysicing/ext/utils/exos"
+	"github.com/ysicing/ext/logger/zlog"
+	"github.com/ysicing/ext/misc"
+	"github.com/ysicing/ext/zos"
 )
 
 type CronTasks struct {
@@ -16,15 +16,15 @@ type CronTasks struct {
 }
 
 func (c *CronTasks) Start() {
-	logger.Slog.Info(exmisc.SGreen("start cron tasks"))
+	zlog.Info(misc.SGreen("start cron tasks"))
 	c.Cron.AddFunc("@every 30s", func() {
-		logger.Slog.Info(exos.GetHostname())
+		zlog.Debug(zos.GetHostname())
 		prom.CronRunTimesCounter.WithLabelValues("default_cron").Inc()
 	})
 	c.Cron.Start()
 }
 
 func (c *CronTasks) Stop() {
-	logger.Slog.Info(exmisc.SGreen("stop cron tasks"))
+	zlog.Info(misc.SGreen("stop cron tasks"))
 	defer c.Cron.Stop()
 }

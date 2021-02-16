@@ -7,8 +7,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/gops/agent"
 	"github.com/spf13/viper"
-	"github.com/ysicing/ext/logger"
-	"github.com/ysicing/ext/utils/exmisc"
+	"github.com/ysicing/ext/exgin"
+	"github.com/ysicing/ext/logger/zlog"
+	"github.com/ysicing/ext/misc"
 	"sync"
 )
 
@@ -31,6 +32,7 @@ func GinInit() {
 		}
 		gin.DisableConsoleColor()
 		Gins = gin.New()
-		logger.Slog.Info(exmisc.SGreen("create gin engine success..."))
+		Gins.Use(exgin.ExRid(), exgin.ExCors(), exgin.ExLog(), exgin.Exrecovery())
+		zlog.Debug(misc.SGreen("create gin engine success..."))
 	})
 }
