@@ -61,7 +61,7 @@ metadata:
   namespace: gaea-op
   labels:
     app: example
-    version: 0.0.1
+    version: 0.0.2
   name: example
 spec:
   replicas: 1
@@ -80,7 +80,7 @@ spec:
     spec:
       containers:
         - name: example
-          image: goexample:0.0.1
+          image: goexample:0.0.2
           imagePullPolicy: Always
           ports:
             - containerPort: 7070
