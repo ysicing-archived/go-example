@@ -16,7 +16,7 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
   title: Go Example API
-  version: 0.0.2
+  version: 0.0.3
 paths:
   /apis/example.dev/v1beta/db/total:
     get:
@@ -29,7 +29,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
       security:
       - ApiKeyAuth: []
       summary: 查看DB大小
@@ -40,7 +41,8 @@ paths:
       consumes:
       - application/json
       responses:
-        "500": {}
+        "500":
+          description: ""
       summary: errpage
       tags:
       - 默认
@@ -49,7 +51,8 @@ paths:
       consumes:
       - application/json
       responses:
-        "500": {}
+        "500":
+          description: ""
       summary: errpanic
       tags:
       - 默认
@@ -65,16 +68,18 @@ paths:
         schema:
           $ref: '#/definitions/health.User'
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: 生成测试Token
       tags:
       - 默认
   /health:
     get:
       consumes:
-      - application/json
+      - pplication/json
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: health
       tags:
       - 默认
@@ -83,7 +88,8 @@ paths:
       consumes:
       - application/json
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: version
       tags:
       - 默认

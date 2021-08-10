@@ -5,10 +5,10 @@ package cron
 
 import (
 	"app/pkg/prom"
+	"github.com/ergoapi/util/color"
+	"github.com/ergoapi/util/zos"
+	"github.com/ergoapi/zlog"
 	"github.com/robfig/cron/v3"
-	"github.com/ysicing/ext/logger/zlog"
-	"github.com/ysicing/ext/misc"
-	"github.com/ysicing/ext/zos"
 )
 
 type CronTasks struct {
@@ -16,7 +16,7 @@ type CronTasks struct {
 }
 
 func (c *CronTasks) Start() {
-	zlog.Info(misc.SGreen("start cron tasks"))
+	zlog.Info(color.SGreen("start cron tasks"))
 	c.Cron.AddFunc("@every 30s", func() {
 		zlog.Debug(zos.GetHostname())
 		prom.CronRunTimesCounter.WithLabelValues("default_cron").Inc()
@@ -25,6 +25,6 @@ func (c *CronTasks) Start() {
 }
 
 func (c *CronTasks) Stop() {
-	zlog.Info(misc.SGreen("stop cron tasks"))
+	zlog.Info(color.SGreen("stop cron tasks"))
 	defer c.Cron.Stop()
 }

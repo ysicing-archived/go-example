@@ -6,12 +6,12 @@ package cmd
 import (
 	"app/cmd/command"
 	"app/constants"
+	"github.com/ergoapi/util/color"
+	"github.com/ergoapi/util/zos"
+	"github.com/ergoapi/zlog"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/ysicing/ext/logger/zlog"
-	"github.com/ysicing/ext/misc"
-	"github.com/ysicing/ext/zos"
 )
 
 var (
@@ -28,12 +28,12 @@ func Execute() error {
 }
 
 func init() {
+	logcfg := &zlog.Config{Simple: true, WriteLog: false, WriteJSON: true, ServiceName: "example"}
+	zlog.InitZlog(logcfg)
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&constants.CfgFile, "config", "", "config file (default is /conf/example.yml)")
 	rootCmd.PersistentFlags().BoolVar(&constants.Debug, "debug", false, "enable debug logging")
 	rootCmd.AddCommand(command.NewVersionCommand(), command.ServerCommand())
-	logcfg := &zlog.Config{Simple: true, WriteLog: false, WriteJSON: true, ServiceName: "example"}
-	zlog.InitZlog(logcfg)
 }
 
 func initConfig() {
@@ -46,12 +46,12 @@ func initConfig() {
 	viper.SetConfigFile(constants.CfgFile)
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err == nil {
-		zlog.Debug("Using config file: %v", misc.SGreen(viper.ConfigFileUsed()))
+		zlog.Debug("Using config file: %v", color.SGreen(viper.ConfigFileUsed()))
 	}
 	// reload
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
-		zlog.Debug("config changed: %v", misc.SGreen(in.Name))
+		zlog.Debug("config changed: %v", color.SGreen(in.Name))
 	})
 	if constants.Debug {
 		viper.Set("server.debug", true)

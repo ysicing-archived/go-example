@@ -4,11 +4,11 @@
 package models
 
 import (
+	"github.com/ergoapi/glog"
+	"github.com/ergoapi/util/color"
+	"github.com/ergoapi/util/ztime"
+	"github.com/ergoapi/zlog"
 	"github.com/spf13/viper"
-	"github.com/ysicing/ext/logger/dblog"
-	"github.com/ysicing/ext/logger/zlog"
-	"github.com/ysicing/ext/misc"
-	"github.com/ysicing/ext/ztime"
 	"gopkg.in/guregu/null.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
@@ -36,7 +36,7 @@ func Init() {
 	dbtype := viper.GetString("db.type")
 	dbdsn := viper.GetString("db.dsn")
 	dbmode := viper.GetBool("db.debug")
-	newLogger := dblog.New(zlog.Zlog, dbmode)
+	newLogger := glog.New(zlog.Zlog, dbmode)
 	switch dbtype {
 	case "mysql":
 		GDB, err = gorm.Open(mysql.Open(dbdsn), &gorm.Config{
@@ -77,5 +77,5 @@ func Init() {
 	if err := GDB.AutoMigrate(Migrates...); err != nil {
 		zlog.Error("auto migrate table err: %v", err.Error())
 	}
-	zlog.Info(misc.SGreen("create db engine success..."))
+	zlog.Info(color.SGreen("create db engine success..."))
 }

@@ -4,8 +4,8 @@
 package assets
 
 import (
+	"github.com/ergoapi/zlog"
 	"github.com/rakyll/statik/fs"
-	"github.com/ysicing/ext/logger/zlog"
 	"net/http"
 )
 

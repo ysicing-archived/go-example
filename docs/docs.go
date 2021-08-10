@@ -56,7 +56,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -70,7 +72,9 @@ var doc = `{
                 ],
                 "summary": "errpage",
                 "responses": {
-                    "500": {}
+                    "500": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -84,7 +88,9 @@ var doc = `{
                 ],
                 "summary": "errpanic",
                 "responses": {
-                    "500": {}
+                    "500": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -109,21 +115,25 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
         "/health": {
             "get": {
                 "consumes": [
-                    "application/json"
+                    "pplication/json"
                 ],
                 "tags": [
                     "默认"
                 ],
                 "summary": "health",
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -137,7 +147,9 @@ var doc = `{
                 ],
                 "summary": "version",
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         }
@@ -168,7 +180,7 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "0.0.2",
+	Version:     "0.0.3",
 	Host:        "",
 	BasePath:    "",
 	Schemes:     []string{},

@@ -15,17 +15,17 @@ fmt:
         exit 1; \
     fi
 
-#lint:
-#
-#	@echo golint ./...
-#	@OUTPUT=`command -v golint >/dev/null 2>&1 && golint ./... 2>&1`; \
-#	if [ "$$OUTPUT" ]; then \
-#		echo "golint errors:"; \
-#		echo "$$OUTPUT"; \
-#		exit 1; \
-#	fi
+lint:
 
-default: fmt ## fmt code
+	@echo golangci-lint run ./...
+	@OUTPUT=`command -v golangci-lint >/dev/null 2>&1 && golangci-lint run ./... 2>&1`; \
+	if [ "$$OUTPUT" ]; then \
+		echo "golangci-lint errors:"; \
+		echo "$$OUTPUT"; \
+		exit 1; \
+	fi
+
+default: fmt lint ## fmt code
 
 static: ## 构建ui
 	hack/build/genui.sh

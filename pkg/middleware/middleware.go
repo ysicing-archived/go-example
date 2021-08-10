@@ -5,11 +5,11 @@ package middleware
 
 import (
 	"app/pkg/gins"
-	"app/pkg/utils"
 	"fmt"
+	"github.com/ergoapi/errors"
+	"github.com/ergoapi/util/color"
+	"github.com/ergoapi/zlog"
 	"github.com/gin-gonic/gin"
-	"github.com/ysicing/ext/logger/zlog"
-	"github.com/ysicing/ext/misc"
 	"sort"
 )
 
@@ -43,7 +43,7 @@ func register(name string, handlerFunc func() gin.HandlerFunc) {
 func registerWithWeight(name string, weight int, handlerFunc func() gin.HandlerFunc) {
 
 	if weight > 100 || weight < 0 {
-		utils.CheckAndExit(fmt.Errorf("middleware weight must be >= 0 and <=100"))
+		errors.CheckAndExit(fmt.Errorf("middleware weight must be >= 0 and <=100"))
 	}
 
 	mw := middleware{
@@ -61,5 +61,5 @@ func Init() {
 		gins.Gins.Use(mw.HandlerFunc())
 		zlog.Debug("load middleware: %v", mw.Name)
 	}
-	zlog.Info(misc.SGreen("load middleware success..."))
+	zlog.Info(color.SGreen("load middleware success..."))
 }

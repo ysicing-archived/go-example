@@ -5,12 +5,12 @@ package main
 
 import (
 	"app/cmd"
-	"app/pkg/utils"
+	"github.com/ergoapi/errors"
 	"runtime"
 )
 
 // @title Go Example API
-// @version 0.0.2
+// @version 0.0.3
 // @description This is a sample server Petstore server.
 
 // @contact.name ysicing
@@ -23,5 +23,5 @@ import (
 func main() {
 	cores := runtime.NumCPU()
 	runtime.GOMAXPROCS(cores)
-	utils.CheckAndExit(cmd.Execute())
+	errors.CheckAndExit(cmd.Execute())
 }

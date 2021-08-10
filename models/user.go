@@ -4,7 +4,7 @@
 package models
 
 import (
-	"github.com/ysicing/ext/logger/zlog"
+	"github.com/ergoapi/zlog"
 	"gorm.io/gorm"
 )
 

@@ -5,11 +5,11 @@ package routers
 
 import (
 	"app/pkg/gins"
-	"app/pkg/utils"
 	"fmt"
+	"github.com/ergoapi/errors"
+	"github.com/ergoapi/util/color"
+	"github.com/ergoapi/zlog"
 	"github.com/gin-gonic/gin"
-	"github.com/ysicing/ext/logger/zlog"
-	"github.com/ysicing/ext/misc"
 	"sort"
 	"strings"
 	"sync"
@@ -48,12 +48,12 @@ func register(name string, f func(router *gin.Engine)) {
 // registerWithWeight register new router with weight
 func registerWithWeight(name string, weight int, f func(router *gin.Engine)) {
 	if weight > 100 || weight < 0 {
-		utils.CheckAndExit(fmt.Errorf("router weight must be >= 0 and <=100"))
+		errors.CheckAndExit(fmt.Errorf("router weight must be >= 0 and <=100"))
 	}
 
 	for _, r := range routers {
-		if strings.ToLower(name) == strings.ToLower(r.Name) {
-			utils.CheckAndExit(fmt.Errorf("router [%s] already register", r.Name))
+		if strings.EqualFold(name, r.Name) {
+			errors.CheckAndExit(fmt.Errorf("router [%s] already register", r.Name))
 		}
 	}
 
@@ -70,8 +70,8 @@ func Init() {
 		sort.Sort(routers)
 		for _, r := range routers {
 			r.Func(gins.Gins)
-			zlog.Debug(misc.SGreen("load router [%s] success...", r.Name))
+			zlog.Debug(color.SGreen("load router [%s] success...", r.Name))
 		}
-		zlog.Info(misc.SGreen("load router success..."))
+		zlog.Info(color.SGreen("load router success..."))
 	})
 }
