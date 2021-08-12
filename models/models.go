@@ -78,4 +78,7 @@ func Init() {
 		zlog.Error("auto migrate table err: %v", err.Error())
 	}
 	zlog.Info(color.SGreen("create db engine success..."))
+
+	InitSalt()
+	InitAdmin()
 }

@@ -18,7 +18,7 @@ type User struct {
 	Email    string `gorm:"column:email" json:"email"`
 	Banned   bool   `gorm:"column:banned" json:"banned"`
 	Token    string `gorm:"column:token" json:"token"`
-	Role string `json:"role"`
+	Role     string `json:"role"`
 }
 
 func (User) TableName() string {
@@ -29,7 +29,7 @@ func init() {
 	Migrate(User{})
 }
 
-func (u *User) Save() error  {
+func (u *User) Save() error {
 	var uu User
 	err := GDB.Model(User{}).Where("username = ?").Last(&uu).Error
 	if err != nil && err != gorm.ErrRecordNotFound {

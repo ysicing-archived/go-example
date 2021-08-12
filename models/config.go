@@ -28,7 +28,6 @@ func (c *Configs) Save() error {
 	return GDB.Where("ckey = ?", c.Ckey).Save(c).Error
 }
 
-
 // ConfigsGet 获取配置
 func ConfigsGet(ckey string) (string, error) {
 	var obj Configs
