@@ -6,9 +6,9 @@ package middleware
 import (
 	"app/pkg/jwt"
 	"app/pkg/rbac"
+	"github.com/ergoapi/exgin"
 	"github.com/gin-gonic/gin"
 	"github.com/storyicon/grbac"
-	"github.com/ysicing/ext/exgin"
 	"strings"
 )
 

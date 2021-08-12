@@ -1,6 +1,7 @@
 BUILD_VERSION   ?= $(shell cat version.txt || echo "0.0.1")
 BUILD_DATE      := $(shell date "+%F %T")
 COMMIT_SHA1     := $(shell git rev-parse --short HEAD || echo "0.0.0")
+IMAGE           ?= ghcr.io/ysicing
 
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -49,7 +50,10 @@ docker: ## 构建镜像
 	# hack/build/gendocs.sh
 	# hack/build/genui.sh
 	# hack/build/genui2go.sh
-	docker build -t goexample:${BUILD_VERSION} -f hack/docker/server/Dockerfile  .
+	docker build -t ${IMAGE}/goexample:${BUILD_VERSION} -f hack/docker/server/Dockerfile .
+	docker tag ${IMAGE}/goexample:${BUILD_VERSION} ${IMAGE}/goexample
+	docker push ${IMAGE}/goexample:${BUILD_VERSION}
+	docker push ${IMAGE}/goexample
 
 clean: ## clean
 	rm -rf dist/*

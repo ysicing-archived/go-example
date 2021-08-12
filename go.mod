@@ -1,6 +1,6 @@
 module app
 
-go 1.15
+go 1.16
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
@@ -25,8 +25,6 @@ require (
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.7.0
-	github.com/ugorji/go v1.2.6 // indirect
-	github.com/ysicing/ext v0.0.0-20210216072601-48e212069500
 	go.uber.org/zap v1.19.0 // indirect
 	golang.org/x/sys v0.0.0-20210809222454-d867a43fc93e // indirect
 	google.golang.org/protobuf v1.27.1 // indirect

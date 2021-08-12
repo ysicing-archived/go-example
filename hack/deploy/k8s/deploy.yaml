@@ -2,7 +2,7 @@
 #kind: PersistentVolumeClaim
 #metadata:
 #  name: exampledb
-#  namespace: gaea-op
+#  namespace: prod
 #spec:
 #  accessModes:
 #    - ReadWriteMany
@@ -14,19 +14,23 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: gaea-op
+  name: prod
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: examplecfg
-  namespace: gaea-op
+  namespace: prod
 data:
   config: |-
     server:
       debug: true
       listen: "0.0.0.0:7070"
       agent: "0.0.0.0:8848"
+      admin:
+        user: demo
+        pass: 1234
+        mail: demo@gov.cn
       ssl:
         enable: true
         listen: "0.0.0.0:7071"
@@ -58,7 +62,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: gaea-op
+  namespace: prod
   labels:
     app: example
     version: 0.0.2
@@ -80,7 +84,7 @@ spec:
     spec:
       containers:
         - name: example
-          image: goexample:0.0.2
+          image: ghcr.io/ysicing/goexample
           imagePullPolicy: Always
           ports:
             - containerPort: 7070
@@ -124,7 +128,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: example
-  namespace: gaea-op
+  namespace: prod
 spec:
   ports:
     - port: 7070
@@ -147,7 +151,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: example
-  namespace: gaea-op
+  namespace: prod
 spec:
   rules:
     - host: example.bj-internal.ops.com

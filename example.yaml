@@ -2,6 +2,10 @@ server:
   debug: true
   listen: "0.0.0.0:7070"
   agent: "0.0.0.0:8848"
+  admin:
+    user: demo
+    pass: 1234
+    mail: demo@gov.cn
   ssl:
     enable: true
     listen: "0.0.0.0:7071"

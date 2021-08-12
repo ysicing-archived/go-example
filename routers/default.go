@@ -6,9 +6,9 @@ package routers
 import (
 	"app/controllers/ops/health"
 	"fmt"
+	"github.com/ergoapi/exgin"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/ysicing/ext/exgin"
 )
 
 func init() {
