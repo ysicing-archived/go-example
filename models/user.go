@@ -31,7 +31,7 @@ func init() {
 
 func (u *User) Save() error {
 	var uu User
-	err := GDB.Model(User{}).Where("username = ?").Last(&uu).Error
+	err := GDB.Model(User{}).Where("username = ?", u.Username).Last(&uu).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return err
 	}
@@ -73,7 +73,7 @@ func (u *User) Exist() bool {
 func InitAdmin() {
 	val, err := ConfigsGet("initadmin")
 	if err != nil {
-		zlog.Fatal("cannot query initadmin", err)
+		zlog.Fatal("cannot query initadmin err: %v", err)
 	}
 	if val != "" {
 		zlog.Info(color.SGreen("exist initadmin %v success...", val))
@@ -88,11 +88,11 @@ func InitAdmin() {
 		Token:    exhash.GenUUIDForUser(user),
 	}
 	if err := adminuser.Save(); err != nil {
-		zlog.Fatal("init admin in mysql", err)
+		zlog.Fatal("init admin in mysql err: %v", err)
 	}
 	err = ConfigsSet("initadmin", "done")
 	if err != nil {
-		zlog.Fatal("init initadmin in mysql", err)
+		zlog.Fatal("init initadmin in mysql err: %v", err)
 	}
 	zlog.Info(color.SGreen("init  admin %v success...", user))
 }
