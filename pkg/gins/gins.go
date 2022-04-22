@@ -5,15 +5,6 @@ package gins
 
 import (
 	"fmt"
-	"github.com/ergoapi/errors"
-	"github.com/ergoapi/exgin"
-	"github.com/ergoapi/util/color"
-	"github.com/ergoapi/util/file"
-	"github.com/ergoapi/util/zos"
-	"github.com/ergoapi/util/ztime"
-	"github.com/ergoapi/zlog"
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 	"net"
 	"net/http/httputil"
 	"os"
@@ -21,6 +12,16 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/ergoapi/errors"
+	"github.com/ergoapi/exgin"
+	"github.com/ergoapi/util/color"
+	"github.com/ergoapi/util/exid"
+	"github.com/ergoapi/util/file"
+	"github.com/ergoapi/util/ztime"
+	"github.com/ergoapi/zlog"
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
 const headerXRequestID = "X-Request-ID"
@@ -42,7 +43,7 @@ func ExRid() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestID := c.Request.Header.Get(headerXRequestID)
 		if requestID == "" {
-			requestID = zos.GenUUID()
+			requestID = exid.GenUUID()
 		}
 		c.Set(headerXRequestID, requestID)
 		c.Writer.Header().Set(headerXRequestID, requestID)

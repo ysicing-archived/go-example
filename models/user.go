@@ -6,6 +6,7 @@ package models
 import (
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/exhash"
+	"github.com/ergoapi/util/exid"
 	"github.com/ergoapi/zlog"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -85,7 +86,7 @@ func InitAdmin() {
 		Password: exhash.MD5(viper.GetString("server.admin.pass")),
 		Email:    viper.GetString("server.admin.mail"),
 		Banned:   false,
-		Token:    exhash.GenUUIDForUser(user),
+		Token:    exid.GenUID(user),
 	}
 	if err := adminuser.Save(); err != nil {
 		zlog.Fatal("init admin in mysql err: %v", err)
