@@ -1,16 +1,18 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package middleware
 
 import (
 	"app/pkg/gins"
 	"fmt"
+	"sort"
+
 	"github.com/ergoapi/errors"
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/zlog"
 	"github.com/gin-gonic/gin"
-	"sort"
 )
 
 type middleware struct {

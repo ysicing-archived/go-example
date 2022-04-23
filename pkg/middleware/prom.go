@@ -1,15 +1,17 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/prometheus/client_golang/prometheus"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 const (

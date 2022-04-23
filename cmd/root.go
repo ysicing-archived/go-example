@@ -1,11 +1,13 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package cmd
 
 import (
 	"app/cmd/command"
 	"app/constants"
+
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/zos"
 	"github.com/ergoapi/zlog"

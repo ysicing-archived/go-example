@@ -1,18 +1,20 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package routers
 
 import (
 	"app/pkg/gins"
 	"fmt"
+	"sort"
+	"strings"
+	"sync"
+
 	"github.com/ergoapi/errors"
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/zlog"
 	"github.com/gin-gonic/gin"
-	"sort"
-	"strings"
-	"sync"
 )
 
 type routerFunc struct {

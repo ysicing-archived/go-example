@@ -1,16 +1,18 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package main
 
 import (
 	"app/cmd"
-	"github.com/ergoapi/errors"
 	"runtime"
+
+	"github.com/ergoapi/errors"
 )
 
 // @title Go Example API
-// @version 0.0.3
+// @version 0.1.0
 // @description This is a sample server Petstore server.
 
 // @contact.name ysicing

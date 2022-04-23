@@ -1,5 +1,6 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package health
 
@@ -7,6 +8,7 @@ import (
 	"app/constants"
 	"app/pkg/jwt"
 	"fmt"
+
 	"github.com/ergoapi/errors"
 	"github.com/ergoapi/exgin"
 	"github.com/ergoapi/zlog"
@@ -79,7 +81,7 @@ type User struct {
 func GenToken(c *gin.Context) {
 	var user User
 	exgin.Bind(c, &user)
-	token, _ := jwt.JwtAuth(user.UserName, user.UserRole)
+	token, _ := jwt.Auth(user.UserName, user.UserRole)
 	data := map[string]interface{}{
 		"user":  user,
 		"token": fmt.Sprintf("Bearer %v", token),

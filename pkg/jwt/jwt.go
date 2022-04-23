@@ -1,18 +1,20 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package jwt
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"strings"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
 )
 
 var jwtSecret []byte
 
-func JwtAuth(username string, role ...string) (t string, err error) {
+func Auth(username string, role ...string) (t string, err error) {
 	var expSecond int64
 	now := time.Now()
 
@@ -45,7 +47,7 @@ func JwtAuth(username string, role ...string) (t string, err error) {
 	return t, nil
 }
 
-func JwtParse(tokenstring string) (jwt.MapClaims, error) {
+func Parse(tokenstring string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenstring, func(token *jwt.Token) (i interface{}, err error) {
 		return jwtSecret, nil
 	})

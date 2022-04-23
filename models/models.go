@@ -1,9 +1,12 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package models
 
 import (
+	"time"
+
 	"github.com/ergoapi/glog"
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/ztime"
@@ -14,7 +17,6 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/plugin/prometheus"
-	"time"
 )
 
 var GDB *gorm.DB

@@ -1,13 +1,43 @@
-BUILD_VERSION   ?= $(shell cat version.txt || echo "0.0.1")
-BUILD_DATE      := $(shell date "+%F %T")
-COMMIT_SHA1     := $(shell git rev-parse --short HEAD || echo "0.0.0")
+###########################################
+.EXPORT_ALL_VARIABLES:
+VERSION_PKG := github.com/ergoapi/util/version
+ROOT_DIR := $(CURDIR)
+BUILD_DIR := $(ROOT_DIR)/_output
+BIN_DIR := $(BUILD_DIR)/bin
+GO111MODULE = on
+GOPROXY = https://goproxy.cn,direct
+GOSUMDB = sum.golang.google.cn
+
+BUILD_VERSION   ?= $(shell cat version.txt || echo "0.0.0")
+BUILD_DATE := $(shell date "+%Y%m%d")
+GIT_COMMIT := $(shell git rev-parse --short HEAD || echo "abcdefgh")
+APP_VERSION := ${BUILD_VERSION}-${BUILD_DATE}-${GIT_COMMIT}
 IMAGE           ?= ghcr.io/ysicing
+
+LDFLAGS := "-w \
+	-X $(VERSION_PKG).release=$(APP_VERSION) \
+	-X $(VERSION_PKG).gitVersion=$(APP_VERSION) \
+	-X $(VERSION_PKG).gitCommit=$(GIT_COMMIT) \
+	-X $(VERSION_PKG).gitBranch=$(GIT_BRANCH) \
+	-X $(VERSION_PKG).buildDate=$(BUILD_DATE) \
+	-X $(VERSION_PKG).gitTreeState=core \
+	-X $(VERSION_PKG).gitMajor=0 \
+	-X $(VERSION_PKG).gitMinor=1"
+
+GO_BUILD_FLAGS+=-ldflags $(LDFLAGS)
+GO_BUILD := go build $(GO_BUILD_FLAGS)
+
+##########################################################################
 
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-fmt:
+gencopyright: ## add copyright
+	@bash hack/scripts/gencopyright.sh
 
+fmt: ## fmt code
+	gofmt -s -w .
+	goimports -w .
 	@echo gofmt -l
 	@OUTPUT=`gofmt -l . 2>&1`; \
 	if [ "$$OUTPUT" ]; then \
@@ -16,53 +46,31 @@ fmt:
         exit 1; \
     fi
 
-lint:
-
-	@echo golangci-lint run ./...
-	@OUTPUT=`command -v golangci-lint >/dev/null 2>&1 && golangci-lint run ./... 2>&1`; \
+lint: ## lint code
+	@echo golangci-lint run --skip-files \".*test.go\" -v ./...
+	@OUTPUT=`command -v golangci-lint >/dev/null 2>&1 && golangci-lint run --skip-files ".*test.go"  -v ./... 2>&1`; \
 	if [ "$$OUTPUT" ]; then \
-		echo "golangci-lint errors:"; \
+		echo "go lint errors:"; \
 		echo "$$OUTPUT"; \
-		exit 1; \
 	fi
 
-default: fmt lint ## fmt code
-
-static: ## 构建ui
-	hack/build/genui.sh
-
-ui: static ## 将ui编译为go文件
-	hack/build/genui2go.sh
-
 doc: ## doc
-	hack/build/gendocs.sh
+	hack/scripts/gendocs.sh
 
-build: ## 构建二进制
-	@echo "build bin ${BUILD_VERSION} ${BUILD_DATE} ${COMMIT_SHA1}"
-	#@bash hack/docker/build.sh ${version} ${tagversion} ${commit_sha1}
-	# go get github.com/mitchellh/gox
-	@CGO_ENABLED=1 GOARCH=amd64 go build -o dist/go-example \
-    	-ldflags   "-X 'app/constants.Commit=${COMMIT_SHA1}' \
-                    -X 'app/constants.Date=${BUILD_DATE}' \
-                    -X 'app/constants.Release=${BUILD_VERSION}'"
+default: gencopyright doc fmt lint ## code flow
+
+build: ## build binary
+	@echo "build bin ${APP_VERSION}"
+	$(GO_BUILD) -o $(BIN_DIR)/go-example main.go
 
 docker: ## 构建镜像
 	# hack/build/gendocs.sh
-	# hack/build/genui.sh
-	# hack/build/genui2go.sh
-	docker build -t ${IMAGE}/goexample:${BUILD_VERSION} -f hack/docker/server/Dockerfile .
-	docker tag ${IMAGE}/goexample:${BUILD_VERSION} ${IMAGE}/goexample
-	docker push ${IMAGE}/goexample:${BUILD_VERSION}
+	docker build -t ${IMAGE}/goexample:${APP_VERSION} -f hack/docker/Dockerfile .
+	docker tag ${IMAGE}/goexample:${APP_VERSION} ${IMAGE}/goexample
+	docker push ${IMAGE}/goexample:${APP_VERSION}
 	docker push ${IMAGE}/goexample
 
 clean: ## clean
-	rm -rf dist/*
-	rm -rf ui/dist
+	rm -rf $(BIN_DIR)
 
-.PHONY : build release clean
-
-.EXPORT_ALL_VARIABLES:
-
-GO111MODULE = on
-GOPROXY = https://goproxy.cn
-GOSUMDB = sum.golang.google.cn
+.PHONY : build clean

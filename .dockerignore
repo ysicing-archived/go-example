@@ -41,3 +41,5 @@ ui
 *.db
 
 dist
+_output
+.build

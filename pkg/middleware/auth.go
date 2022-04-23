@@ -1,15 +1,17 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package middleware
 
 import (
 	"app/pkg/jwt"
 	"app/pkg/rbac"
+	"strings"
+
 	"github.com/ergoapi/exgin"
 	"github.com/gin-gonic/gin"
 	"github.com/storyicon/grbac"
-	"strings"
 )
 
 func init() {
@@ -25,7 +27,7 @@ func authrole(c *gin.Context) (roles []string, err error) {
 	}
 	token := strings.Fields(bearerToken)[1]
 
-	claims, err := jwt.JwtParse(token)
+	claims, err := jwt.Parse(token)
 	if err != nil {
 		return nil, err
 	}

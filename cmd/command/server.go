@@ -1,22 +1,16 @@
-// MIT License
-// Copyright (c) 2020 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package command
 
 import (
-	"app/models"
-	gcron "app/pkg/cron"
-	"app/pkg/gins"
-	"app/pkg/middleware"
-	"app/routers"
-	"github.com/ergoapi/util/exhttp"
-	"github.com/ergoapi/zlog"
-	"github.com/gin-gonic/gin"
-	"github.com/robfig/cron/v3"
+	"app/internal/app/server"
+	"context"
+	"os/signal"
+	"syscall"
+
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	"net/http"
-	"os"
 )
 
 func ServerCommand() *cobra.Command {
@@ -29,45 +23,10 @@ func ServerCommand() *cobra.Command {
 }
 
 func core(cmd *cobra.Command, args []string) {
-	models.Init()
-	gins.GinInit()
-	middleware.Init()
-	routers.Init()
-	taskscron := gcron.CronTasks{Cron: cron.New()}
-	taskscron.Start()
-	defer taskscron.Stop()
-	addr := viper.GetString("server.listen")
-	srv := &http.Server{
-		Addr:    addr,
-		Handler: gins.Gins,
-	}
-	if viper.GetBool("server.ssl.enable") {
-		go startTls(gins.Gins)
-	}
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT)
 	go func() {
-		zlog.Info("http listen to %v, pid is %v", addr, os.Getpid())
-		//	utils.CheckAndExit(gins.Gins.Run(addr))
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			zlog.Fatal("err: %v", err)
-		}
+		<-ctx.Done()
+		stop()
 	}()
-	exhttp.SetupGracefulStop(srv)
-}
-
-func startTls(e *gin.Engine) {
-	tlsaddr := viper.GetString("server.ssl.listen")
-	srv := &http.Server{
-		Addr:    tlsaddr,
-		Handler: e,
-	}
-	tlscfile := viper.GetString("server.ssl.cert")
-	tlskfile := viper.GetString("server.ssl.key")
-	go func() {
-		zlog.Info("tls listen to %v, pid is %v", tlsaddr, os.Getpid())
-
-		if err := srv.ListenAndServeTLS(tlscfile, tlskfile); err != nil && err != http.ErrServerClosed {
-			zlog.Fatal("err: %v", err)
-		}
-	}()
-	exhttp.SetupGracefulStop(srv)
+	server.Serve(ctx)
 }

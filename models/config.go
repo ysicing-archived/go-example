@@ -1,17 +1,19 @@
-// AGPL License
-// Copyright (c) 2021 ysicing <i@ysicing.me>
+// Copyright (c) 2022 ysicing All rights reserved.
+// Use of this source code is governed by WTFPL LICENSE
+// license that can be found in the LICENSE file.
 
 package models
 
 import (
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/exhash"
 	"github.com/ergoapi/util/rand"
 	"github.com/ergoapi/zlog"
 	"gorm.io/gorm"
-	"os"
-	"time"
 )
 
 // Configs 配置
