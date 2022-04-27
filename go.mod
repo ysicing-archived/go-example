@@ -10,7 +10,7 @@ require (
 	github.com/ergoapi/glog v0.0.5
 	github.com/ergoapi/util v0.2.11
 	github.com/ergoapi/zlog v0.0.3
-	github.com/fsnotify/fsnotify v1.5.3
+	github.com/fsnotify/fsnotify v1.5.4
 	github.com/gin-gonic/gin v1.7.7
 	github.com/prometheus/client_golang v1.12.1
 	github.com/robfig/cron/v3 v3.0.1
