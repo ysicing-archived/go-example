@@ -8,7 +8,7 @@ require (
 	github.com/ergoapi/errors v0.0.1
 	github.com/ergoapi/exgin v1.0.8
 	github.com/ergoapi/glog v0.0.5
-	github.com/ergoapi/util v0.2.11
+	github.com/ergoapi/util v0.2.13
 	github.com/ergoapi/zlog v0.0.3
 	github.com/fsnotify/fsnotify v1.5.4
 	github.com/gin-gonic/gin v1.7.7
