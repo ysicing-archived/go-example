@@ -22,8 +22,8 @@ require (
 	github.com/swaggo/swag v1.8.1
 	gopkg.in/guregu/null.v3 v3.5.0
 	gorm.io/driver/mysql v1.3.3
-	gorm.io/driver/sqlite v1.3.1
-	gorm.io/gorm v1.23.5
+	gorm.io/driver/sqlite v1.4.2
+	gorm.io/gorm v1.24.0
 	gorm.io/plugin/prometheus v0.0.0-20210201030325-2d0d2f250610
 )
 
@@ -60,7 +60,7 @@ require (
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/mattn/go-sqlite3 v1.14.12 // indirect
+	github.com/mattn/go-sqlite3 v1.14.15 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
