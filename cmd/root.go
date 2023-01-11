@@ -10,8 +10,8 @@ import (
 
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/zos"
-	"github.com/ergoapi/zlog"
 	"github.com/fsnotify/fsnotify"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -30,8 +30,9 @@ func Execute() error {
 }
 
 func init() {
-	logcfg := &zlog.Config{Simple: true, WriteLog: false, WriteJSON: true, ServiceName: "example"}
-	zlog.InitZlog(logcfg)
+	logrus.SetFormatter(&logrus.TextFormatter{})
+	logrus.SetLevel(logrus.DebugLevel)
+	logrus.SetReportCaller(false)
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&constants.CfgFile, "config", "", "config file (default is /conf/example.yml)")
 	rootCmd.PersistentFlags().BoolVar(&constants.Debug, "debug", false, "enable debug logging")
@@ -48,12 +49,12 @@ func initConfig() {
 	viper.SetConfigFile(constants.CfgFile)
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err == nil {
-		zlog.Debug("Using config file: %v", color.SGreen(viper.ConfigFileUsed()))
+		logrus.Debugf("Using config file: %v", color.SGreen(viper.ConfigFileUsed()))
 	}
 	// reload
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
-		zlog.Debug("config changed: %v", color.SGreen(in.Name))
+		logrus.Debugf("config changed: %v", color.SGreen(in.Name))
 	})
 	if constants.Debug {
 		viper.Set("server.debug", true)

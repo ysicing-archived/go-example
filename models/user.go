@@ -8,7 +8,7 @@ import (
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/exhash"
 	"github.com/ergoapi/util/exid"
-	"github.com/ergoapi/zlog"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
@@ -49,12 +49,12 @@ func (u *User) Save() error {
 func (u *User) New() *User {
 	tx := GDB.Save(&u)
 	if tx.Error != nil {
-		zlog.Debug("添加人员save: %v, err: %v", u.Username, tx.Error.Error())
+		logrus.Debugf("添加人员save: %v, err: %v", u.Username, tx.Error.Error())
 		return nil
 	}
 	var nw User
 	if err := tx.Row().Scan(&nw); err != nil {
-		zlog.Debug("添加人员scan: %v, err: %v", u.Username, err.Error())
+		logrus.Debugf("添加人员scan: %v, err: %v", u.Username, err.Error())
 		return nil
 	}
 	return &nw
@@ -75,10 +75,10 @@ func (u *User) Exist() bool {
 func InitAdmin() {
 	val, err := ConfigsGet("initadmin")
 	if err != nil {
-		zlog.Fatal("cannot query initadmin err: %v", err)
+		logrus.Fatalf("cannot query initadmin err: %v", err)
 	}
 	if val != "" {
-		zlog.Info(color.SGreen("exist initadmin %v success...", val))
+		logrus.Infof(color.SGreen("exist initadmin %v success...", val))
 		return
 	}
 	user := viper.GetString("server.admin.user")
@@ -90,11 +90,11 @@ func InitAdmin() {
 		Token:    exid.GenUID(user),
 	}
 	if err := adminuser.Save(); err != nil {
-		zlog.Fatal("init admin in mysql err: %v", err)
+		logrus.Fatalf("init admin in mysql err: %v", err)
 	}
 	err = ConfigsSet("initadmin", "done")
 	if err != nil {
-		zlog.Fatal("init initadmin in mysql err: %v", err)
+		logrus.Fatalf("init initadmin in mysql err: %v", err)
 	}
-	zlog.Info(color.SGreen("init  admin %v success...", user))
+	logrus.Infof(color.SGreen("init  admin %v success...", user))
 }

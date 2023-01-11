@@ -36,26 +36,6 @@ paths:
       summary: 查看DB大小
       tags:
       - 示例API
-  /err500:
-    get:
-      consumes:
-      - application/json
-      responses:
-        "500":
-          description: ""
-      summary: errpage
-      tags:
-      - 默认
-  /errpanic:
-    get:
-      consumes:
-      - application/json
-      responses:
-        "500":
-          description: ""
-      summary: errpanic
-      tags:
-      - 默认
   /gentoken:
     post:
       consumes:

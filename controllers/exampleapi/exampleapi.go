@@ -5,8 +5,8 @@
 package exampleapi
 
 import (
-	"github.com/ergoapi/errors"
-	"github.com/ergoapi/exgin"
+	errors "github.com/ergoapi/util/exerror"
+	"github.com/ergoapi/util/exgin"
 	"github.com/ergoapi/util/file"
 	"github.com/ergoapi/util/ztime"
 	"github.com/gin-gonic/gin"

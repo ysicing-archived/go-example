@@ -11,10 +11,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ergoapi/errors"
 	"github.com/ergoapi/util/color"
-	"github.com/ergoapi/zlog"
+	errors "github.com/ergoapi/util/exerror"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 type routerFunc struct {
@@ -72,8 +72,8 @@ func Init() {
 		sort.Sort(routers)
 		for _, r := range routers {
 			r.Func(gins.Gins)
-			zlog.Debug(color.SGreen("load router [%s] success...", r.Name))
+			logrus.Debugf(color.SGreen("load router [%s] success...", r.Name))
 		}
-		zlog.Info(color.SGreen("load router success..."))
+		logrus.Info(color.SGreen("load router success..."))
 	})
 }

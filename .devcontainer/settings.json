@@ -1,0 +1,146 @@
+{
+	"editor.accessibilitySupport": "off", // 屏幕阅读器模式
+	"editor.cursorSmoothCaretAnimation": true,
+	"editor.find.addExtraSpaceOnTop": false,
+	"editor.glyphMargin": true,
+	"editor.guides.bracketPairs": "active",
+	"editor.lineNumbers": "interval",
+	"editor.suggestSelection": "first",
+	"editor.inlineSuggest.enabled": true,
+	"editor.autoClosingQuotes": "always",
+	"editor.autoClosingBrackets": "always",
+	"editor.autoClosingOvertype": "always",
+	"editor.formatOnPaste": true,
+	"editor.quickSuggestions": {
+		"strings": true,
+		"comments": true,
+		"other": true
+	},
+	"editor.quickSuggestionsDelay": 0,
+	"editor.unicodeHighlight.invisibleCharacters": false,
+	"editor.fontSize": 18,
+	"editor.renderWhitespace": "boundary",
+	"editor.tabSize": 2,
+	// "editor.fontFamily": "'Courier New',monospace",
+	"editor.codeActionsOnSave": {
+		"source.fixAll": false,
+		"source.fixAll.eslint": true, // this allows ESLint to auto fix on save
+		"source.organizeImports": false
+	},
+	"explorer.confirmDelete": false, // 是否换行
+	"explorer.confirmDragAndDrop": false,
+	"window.autoDetectColorScheme": true,
+	"window.dialogStyle": "custom",
+	"window.nativeTabs": true, // this is great, macOS only
+	"window.titleBarStyle": "custom",
+	"workbench.activityBar.visible": true,
+	"workbench.startupEditor": "newUntitledFile",
+	"workbench.iconTheme": "vscode-icons",
+	"workbench.editor.closeOnFileDelete": true,
+	"workbench.editor.highlightModifiedTabs": true,
+	"workbench.editor.tabCloseButton": "left",
+	"workbench.tree.expandMode": "singleClick",
+	"workbench.tree.indent": 10,
+	"workbench.editorAssociations": {
+		"*.db": "default"
+	},
+	"extensions.autoUpdate": "onlyEnabledExtensions",
+	"extensions.ignoreRecommendations": true,
+	"files.autoSave": "afterDelay",
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.simpleDialog.enable": true,
+	"terminal.integrated.defaultProfile.osx": "zsh",
+	"terminal.integrated.cursorBlinking": true,
+	// "terminal.integrated.cursorStyle": "line",
+	// "terminal.integrated.fontWeight": "500",
+	// "terminal.integrated.persistentSessionReviveProcess": "never",
+	// "terminal.integrated.tabs.enabled": true,
+	// "terminal.integrated.fontFamily": "Consolas,'Courier New',monospace",
+	"go.toolsManagement.autoUpdate": true,
+	"go.autocompleteUnimportedPackages": true,
+	"go.gocodeAutoBuild": false,
+	"go.useLanguageServer": true,
+	"go.inferGopath": false,
+	"go.buildOnSave": "workspace",
+	"go.lintOnSave": "package",
+	"go.vetOnSave": "package",
+	"go.coverOnSave": false,
+	"go.docsTool": "gogetdoc",
+	"go.gocodePackageLookupMode": "go",
+	"go.gotoSymbol.includeImports": true,
+	"go.useCodeSnippetsOnFunctionSuggest": true, //使用代码片段提示
+	"go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+	"go.formatTool": "goimports", //代码格式化
+	"go.lintTool": "golangci-lint",
+	"eslint.format.enable": true,
+	"security.workspace.trust.untrustedFiles": "open",
+	"redhat.telemetry.enabled": true,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+	// "workbench.colorTheme": "Default Light+",
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"github.copilot.enable": {
+		"*": true,
+		"yaml": true,
+		"plaintext": true,
+		"markdown": true,
+		"php": true,
+		"go": true
+	},
+	"diffEditor.ignoreTrimWhitespace": false,
+	"scm.diffDecorationsGutterWidth": 2,
+	"vsicons.dontShowNewVersionMessage": true,
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"auto-close-tag.activationOnLanguage": [
+		"xml",
+		"php",
+		"blade",
+		"ejs",
+		"jinja",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"plaintext",
+		"markdown",
+		"vue",
+		"liquid",
+		"erb",
+		"lang-cfml",
+		"cfml",
+		"HTML (EEx)",
+		"HTML (Eex)",
+		"plist"
+	],
+	"search.exclude": {
+		"**/.git": true,
+		"**/.github": true,
+		"**/.nuxt": true,
+		"**/.output": true,
+		"**/.pnpm": true,
+		"**/.vscode": true,
+		"**/.yarn": true,
+		"**/bower_components": true,
+		"**/dist/**": true,
+		"**/logs": true,
+		"**/node_modules": true,
+		"**/out/**": true,
+		"**/package-lock.json": true,
+		"**/pnpm-lock.yaml": true,
+		"**/tmp": true,
+		"**/yarn.lock": true
+	},
+	"editor.language.colorizedBracketPairs": []
+}
+

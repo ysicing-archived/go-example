@@ -9,14 +9,14 @@ import (
 	"app/pkg/jwt"
 	"fmt"
 
-	"github.com/ergoapi/errors"
-	"github.com/ergoapi/exgin"
-	"github.com/ergoapi/zlog"
+	"github.com/ergoapi/util/exgin"
 	"github.com/gin-gonic/gin"
 )
 
 // Health
-//  @Summary health
+//
+//	@Summary health
+//
 // @version 0.0.1
 // @Accept pplication/json
 // @Tags 默认
@@ -39,30 +39,6 @@ func RVersion(c *gin.Context) {
 		"release":   constants.Release,
 		"gitcommit": constants.Commit,
 	}, nil)
-}
-
-// Err500
-// @Summary errpage
-// @version 0.0.1
-// @Accept application/json
-// @Tags 默认
-// @Success 500
-// @Router /err500 [get]
-func Err500(c *gin.Context) {
-	zlog.Error("too long err")
-	errors.Bomb("500 Err by Gins!")
-}
-
-// ErrPanic
-// @Summary errpanic
-// @version 0.0.1
-// @Accept application/json
-// @Tags 默认
-// @Success 500
-// @Router /errpanic [get]
-func ErrPanic(c *gin.Context) {
-	panic("panic_err")
-	// errors.Bomb("Test panic err by Gins!")
 }
 
 type User struct {

@@ -7,14 +7,14 @@ package models
 import (
 	"time"
 
-	"github.com/ergoapi/glog"
 	"github.com/ergoapi/util/color"
+	"github.com/ergoapi/util/log/glog"
 	"github.com/ergoapi/util/ztime"
-	"github.com/ergoapi/zlog"
+	"github.com/glebarez/sqlite"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"gopkg.in/guregu/null.v3"
 	"gorm.io/driver/mysql"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/plugin/prometheus"
 )
@@ -37,20 +37,18 @@ func Init() {
 	var err error
 	dbtype := viper.GetString("db.type")
 	dbdsn := viper.GetString("db.dsn")
-	dbmode := viper.GetBool("db.debug")
-	newLogger := glog.New(zlog.Zlog, dbmode)
 	switch dbtype {
 	case "mysql":
 		GDB, err = gorm.Open(mysql.Open(dbdsn), &gorm.Config{
-			Logger: newLogger,
+			Logger: &glog.DefaultGLogger,
 		})
 	default:
 		GDB, err = gorm.Open(sqlite.Open(dbdsn), &gorm.Config{
-			Logger: newLogger,
+			Logger: &glog.DefaultGLogger,
 		})
 	}
 	if err != nil {
-		zlog.Panic("setup db err: %v", err.Error())
+		logrus.Panicf("setup db err: %v", err.Error())
 	}
 	if viper.GetBool("db.metrics.enable") {
 		dbname := viper.GetString("db.metrics.name")
@@ -77,9 +75,9 @@ func Init() {
 	dbcfg.SetConnMaxLifetime(time.Hour)
 
 	if err := GDB.AutoMigrate(Migrates...); err != nil {
-		zlog.Error("auto migrate table err: %v", err.Error())
+		logrus.Errorf("auto migrate table err: %v", err.Error())
 	}
-	zlog.Info(color.SGreen("create db engine success..."))
+	logrus.Info(color.SGreen("create db engine success..."))
 
 	InitSalt()
 	InitAdmin()

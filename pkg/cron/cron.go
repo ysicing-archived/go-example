@@ -9,8 +9,8 @@ import (
 
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/zos"
-	"github.com/ergoapi/zlog"
 	"github.com/robfig/cron/v3"
+	"github.com/sirupsen/logrus"
 )
 
 var Cron *Client
@@ -24,7 +24,7 @@ func New() *Client {
 }
 
 func (c *Client) Start() {
-	zlog.Info(color.SGreen("start cron tasks"))
+	logrus.Info(color.SGreen("start cron tasks"))
 	c.client.Start()
 }
 
@@ -33,7 +33,7 @@ func (c *Client) Add(spec string, cmd func()) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	zlog.Info("add cron: %v", id)
+	logrus.Infof("add cron: %v", id)
 	return int(id), nil
 }
 
@@ -42,20 +42,20 @@ func (c *Client) Remove(id int) {
 }
 
 func (c *Client) Default() {
-	zlog.Info("add default cron")
+	logrus.Info("add default cron")
 	id, err := c.Add("@every 30s", func() {
-		zlog.Debug(zos.GetHostname())
+		logrus.Debug(zos.GetHostname())
 		prom.CronRunTimesCounter.WithLabelValues("default_cron").Inc()
 	})
 	if err != nil {
-		zlog.Error("add default cron error: %s", err)
+		logrus.Errorf("add default cron error: %s", err)
 		return
 	}
-	zlog.Info("add default cron [%d] success", id)
+	logrus.Infof("add default cron [%d] success", id)
 }
 
 func (c *Client) Stop() {
-	zlog.Info(color.SGreen("stop cron tasks"))
+	logrus.Info(color.SGreen("stop cron tasks"))
 	c.client.Stop()
 }
 

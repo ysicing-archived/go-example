@@ -12,7 +12,7 @@ import (
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/exhash"
 	"github.com/ergoapi/util/rand"
-	"github.com/ergoapi/zlog"
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -69,17 +69,17 @@ func ConfigsSet(ckey, cval string) error {
 func InitSalt() {
 	val, err := ConfigsGet("salt")
 	if err != nil {
-		zlog.Fatal("cannot query salt", err)
+		logrus.Fatal("cannot query salt", err)
 	}
 	if val != "" {
-		zlog.Info(color.SGreen("exist salt %v success...", val))
+		logrus.Infof(color.SGreen("exist salt %v success...", val))
 		return
 	}
 	content := fmt.Sprintf("%s%d%d%s", rand.RandLetters(6), os.Getpid(), time.Now().UnixNano(), rand.RandLetters(6))
 	salt := exhash.MD5(content)
 	err = ConfigsSet("salt", salt)
 	if err != nil {
-		zlog.Fatal("init salt in mysql", err)
+		logrus.Fatal("init salt in mysql", err)
 	}
-	zlog.Info(color.SGreen("create salt %v success...", salt))
+	logrus.Infof(color.SGreen("create salt %v success...", salt))
 }

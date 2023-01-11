@@ -9,7 +9,7 @@ import (
 	"app/pkg/rbac"
 	"strings"
 
-	"github.com/ergoapi/exgin"
+	"github.com/ergoapi/util/exgin"
 	"github.com/gin-gonic/gin"
 	"github.com/storyicon/grbac"
 )

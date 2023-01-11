@@ -9,10 +9,10 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/ergoapi/errors"
 	"github.com/ergoapi/util/color"
-	"github.com/ergoapi/zlog"
+	errors "github.com/ergoapi/util/exerror"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 type middleware struct {
@@ -61,7 +61,7 @@ func Init() {
 	sort.Sort(mws)
 	for _, mw := range mws {
 		gins.Gins.Use(mw.HandlerFunc())
-		zlog.Debug("load middleware: %v", mw.Name)
+		logrus.Debugf("load middleware: %v", mw.Name)
 	}
-	zlog.Info(color.SGreen("load middleware success..."))
+	logrus.Info(color.SGreen("load middleware success..."))
 }

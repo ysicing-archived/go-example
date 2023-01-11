@@ -15,8 +15,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/ergoapi/zlog"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -40,13 +40,13 @@ func Serve(ctx context.Context) error {
 		ctx, cancel := context.WithTimeout(context.TODO(), time.Second*5)
 		defer cancel()
 		if err := srv.Shutdown(ctx); err != nil {
-			zlog.Error("Failed to stop http server, error: %s", err)
+			logrus.Errorf("Failed to stop http server, error: %s", err)
 		}
-		zlog.Info("server exited.")
+		logrus.Info("server exited.")
 	}()
-	zlog.Info("http listen to %v, pid is %v", addr, os.Getpid())
+	logrus.Infof("http listen to %v, pid is %v", addr, os.Getpid())
 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		zlog.Error("Failed to start http server, error: %s", err)
+		logrus.Errorf("Failed to start http server, error: %s", err)
 		return err
 	}
 	return nil
@@ -65,12 +65,12 @@ func startTLS(ctx context.Context, e *gin.Engine) {
 		ctx, cancel := context.WithTimeout(context.TODO(), time.Second*5)
 		defer cancel()
 		if err := srv.Shutdown(ctx); err != nil {
-			zlog.Error("failed to stop tls server, error: %s", err)
+			logrus.Errorf("failed to stop tls server, error: %s", err)
 		}
-		zlog.Info("tls server exited.")
+		logrus.Info("tls server exited.")
 	}()
-	zlog.Info("tls listen to %v, pid is %v", tlsaddr, os.Getpid())
+	logrus.Infof("tls listen to %v, pid is %v", tlsaddr, os.Getpid())
 	if err := srv.ListenAndServeTLS(tlscfile, tlskfile); err != nil && err != http.ErrServerClosed {
-		zlog.Fatal("failed to start tls server, error: %s", err)
+		logrus.Fatalf("failed to start tls server, error: %s", err)
 	}
 }

@@ -8,7 +8,7 @@ import (
 	"app/cmd"
 	"runtime"
 
-	"github.com/ergoapi/errors"
+	errors "github.com/ergoapi/util/exerror"
 )
 
 // @title Go Example API

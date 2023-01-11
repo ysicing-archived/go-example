@@ -45,38 +45,6 @@
                 }
             }
         },
-        "/err500": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "tags": [
-                    "默认"
-                ],
-                "summary": "errpage",
-                "responses": {
-                    "500": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/errpanic": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "tags": [
-                    "默认"
-                ],
-                "summary": "errpanic",
-                "responses": {
-                    "500": {
-                        "description": ""
-                    }
-                }
-            }
-        },
         "/gentoken": {
             "post": {
                 "consumes": [
