@@ -5,9 +5,10 @@
 package middleware
 
 import (
-	"app/pkg/jwt"
 	"app/pkg/rbac"
 	"strings"
+
+	"github.com/ergoapi/util/exjwt"
 
 	"github.com/ergoapi/util/exgin"
 	"github.com/gin-gonic/gin"
@@ -27,17 +28,17 @@ func authrole(c *gin.Context) (roles []string, err error) {
 	}
 	token := strings.Fields(bearerToken)[1]
 
-	claims, err := jwt.Parse(token)
+	claims, err := exjwt.Parse(token)
 	if err != nil {
 		return nil, err
 	}
-	role := claims["role"].(string)
+	uuid := claims["uuid"].(string)
 	info := map[string]string{
 		"username": claims["username"].(string),
-		"role":     role,
+		"uuid":     uuid,
 	}
 	c.Set("userinfo", info)
-	return []string{role}, nil
+	return []string{uuid}, nil
 }
 
 // auth jwt auth

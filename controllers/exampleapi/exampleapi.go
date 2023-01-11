@@ -5,8 +5,12 @@
 package exampleapi
 
 import (
+	"app/models"
+
 	errors "github.com/ergoapi/util/exerror"
 	"github.com/ergoapi/util/exgin"
+	"github.com/ergoapi/util/exid"
+	"github.com/ergoapi/util/expass"
 	"github.com/ergoapi/util/file"
 	"github.com/ergoapi/util/ztime"
 	"github.com/gin-gonic/gin"
@@ -38,4 +42,25 @@ func DBTotal(c *gin.Context) {
 		return
 	}
 	errors.Dangerous("文件不存在")
+}
+
+// DBAdd
+// @Summary 操作DB
+// @version 0.0.1
+// @Tags 示例API
+// @Accept application/json
+// @Param Authorization header string true "token"
+// @Security ApiKeyAuth
+// @Success 200
+// @Router /apis/example.dev/v1beta/db/add [post]
+func DBAdd(c *gin.Context) {
+	user := exid.GenUUID()
+	genuser := models.User{
+		Username: user,
+		Password: expass.PwGenAlphaNumSymbols(16),
+		Email:    "",
+		Banned:   false,
+		Token:    exid.GenUID(user),
+	}
+	exgin.GinsData(c, genuser, genuser.Save())
 }

@@ -18,6 +18,24 @@ info:
   title: Go Example API
   version: 0.1.0
 paths:
+  /apis/example.dev/v1beta/db/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+      security:
+      - ApiKeyAuth: []
+      summary: 操作DB
+      tags:
+      - 示例API
   /apis/example.dev/v1beta/db/total:
     get:
       consumes:

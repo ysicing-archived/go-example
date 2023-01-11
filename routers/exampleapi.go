@@ -14,5 +14,6 @@ func init() {
 	register("exampleapi", func(r *gin.Engine) {
 		rg := r.Group("/apis/example.dev")
 		rg.GET("/v1beta/db/total", exampleapi.DBTotal)
+		rg.POST("/v1beta/db/add", exampleapi.DBAdd)
 	})
 }

@@ -6,7 +6,7 @@ package health
 
 import (
 	"app/constants"
-	"app/pkg/jwt"
+	"github.com/ergoapi/util/exjwt"
 	"fmt"
 
 	"github.com/ergoapi/util/exgin"
@@ -57,7 +57,7 @@ type User struct {
 func GenToken(c *gin.Context) {
 	var user User
 	exgin.Bind(c, &user)
-	token, _ := jwt.Auth(user.UserName, user.UserRole)
+	token, _ := exjwt.Auth(user.UserName, user.UserRole)
 	data := map[string]interface{}{
 		"user":  user,
 		"token": fmt.Sprintf("Bearer %v", token),
