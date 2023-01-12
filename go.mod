@@ -13,8 +13,8 @@ require (
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.11.0
 	github.com/storyicon/grbac v0.0.0-20200224041032-a0461737df7e
-	github.com/swaggo/files v0.0.0-20210815190702-a29dd2bc99b2
-	github.com/swaggo/gin-swagger v1.4.3
+	github.com/swaggo/files v0.0.0-20220728132757-551d4a08d97a
+	github.com/swaggo/gin-swagger v1.5.3
 	github.com/swaggo/swag v1.8.1
 	gopkg.in/guregu/null.v3 v3.5.0
 	gorm.io/driver/mysql v1.4.5
@@ -33,7 +33,6 @@ require (
 	github.com/cockroachdb/redact v1.1.3 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/getsentry/sentry-go v0.16.0 // indirect
-	github.com/gin-contrib/gzip v0.0.6 // indirect
 	github.com/gin-contrib/pprof v1.4.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/glebarez/go-sqlite v1.20.0 // indirect
