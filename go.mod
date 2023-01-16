@@ -3,7 +3,7 @@ module app
 go 1.19
 
 require (
-	github.com/ergoapi/util v0.3.2
+	github.com/ergoapi/util v0.3.4
 	github.com/fsnotify/fsnotify v1.5.4
 	github.com/gin-gonic/gin v1.8.2
 	github.com/glebarez/sqlite v1.6.0
@@ -48,6 +48,7 @@ require (
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.3 // indirect
+	github.com/golang-module/carbon/v2 v2.2.3 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/gops v0.3.26 // indirect
 	github.com/google/uuid v1.3.0 // indirect
