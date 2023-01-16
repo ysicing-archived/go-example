@@ -1,4 +1,4 @@
-// Copyright (c) 2022 ysicing All rights reserved.
+// Copyright (c) 2023 ysicing All rights reserved.
 // Use of this source code is governed by WTFPL LICENSE
 // license that can be found in the LICENSE file.
 
@@ -17,16 +17,16 @@ func ServerCommand() *cobra.Command {
 	s := &cobra.Command{
 		Use:   "server",
 		Short: "core server",
-		Run:   core,
+		RunE:  core,
 	}
 	return s
 }
 
-func core(cmd *cobra.Command, args []string) {
+func core(cmd *cobra.Command, args []string) error {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT)
 	go func() {
 		<-ctx.Done()
 		stop()
 	}()
-	server.Serve(ctx)
+	return server.Serve(ctx)
 }
