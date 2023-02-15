@@ -15,7 +15,7 @@ require (
 	github.com/storyicon/grbac v0.0.0-20200224041032-a0461737df7e
 	github.com/swaggo/files v0.0.0-20220728132757-551d4a08d97a
 	github.com/swaggo/gin-swagger v1.5.3
-	github.com/swaggo/swag v1.8.9
+	github.com/swaggo/swag v1.8.10
 	gopkg.in/guregu/null.v3 v3.5.0
 	gorm.io/driver/mysql v1.4.6
 	gorm.io/gorm v1.24.5
