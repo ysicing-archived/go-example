@@ -9,7 +9,7 @@ vars:
   ROOT_DIR: $(pwd)
   BUILD_DIR: $(pwd)/_output
   BIN_DIR: $(pwd)/_output/bin
-  BUILD_RELEASE: v$(cat VERSION || echo "0.0.1")
+  BUILD_RELEASE: $(cat VERSION || echo "0.0.1")
   BUILD_DATE: $(date +%Y%m%d%H)
   GIT_BRANCH: $(git branch -r --contains | head -1 | sed -E -e "s%(HEAD ->|origin|upstream)/?%%g" | xargs)
   GIT_COMMIT: $(git rev-parse --short HEAD || echo "abcdefgh")
