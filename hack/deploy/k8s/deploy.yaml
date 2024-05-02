@@ -147,20 +147,23 @@ spec:
     app: example
   type: ClusterIP
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example
   namespace: ysicing-system
 spec:
   rules:
-    - host: example.bj-internal.ops.com
-      http:
-        paths:
-          - backend:
-              serviceName: example
-              servicePort: http-7070
-            path: /
+  - host: example.bj-internal.ops.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: example
+            port:
+              number: 7070
   # tls:
   #   - hosts:
   #       - example.bj-internal.ops.com
