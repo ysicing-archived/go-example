@@ -4,6 +4,10 @@
 
 FROM ysicing/god AS build
 
+LABEL org.opencontainers.image.source "https://github.com/ysicing/go-example"
+LABEL org.opencontainers.image.authors "ysicing"
+LABEL maintainer "ysicing"
+
 WORKDIR /go/src
 
 COPY . /go/src/
@@ -12,9 +16,9 @@ RUN task build
 
 FROM ysicing/debian
 
-LABEL org.opencontainers.image.source = "https://github.com/ysicing/go-example"
-LABEL org.opencontainers.image.authors="ysicing"
-LABEL maintainer="ysicing"
+LABEL org.opencontainers.image.source "https://github.com/ysicing/go-example"
+LABEL org.opencontainers.image.authors "ysicing"
+LABEL maintainer "ysicing"
 
 COPY hack/docker/run.sh /run.sh
 
