@@ -1,11 +1,21 @@
 name: "go-example"
+
+env:
+  # Common versions
+  GO_VERSION: '1.22'
+  TZ: Asia/Shanghai
+
+permissions: write-all
+
 on:
   push:
     branches:
-      - master
+      - '*'
 
 jobs:
   test:
+    name: "test"
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,20 +25,27 @@ jobs:
       - name: install kubectl
         uses: azure/setup-kubectl
       - name: Install Go
-        uses: actions/setup-go
+        uses: actions/setup-go@v5
         with:
-          go-version: 1.19.x
+          go-version: ${{ env.GO_VERSION }}
+          check-latest: true
       - name: Login GHCR
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCRIO }}
+      - name: install gox
+        run: |
+          echo "install gox"
+          go install github.com/mitchellh/gox@latest
+      - name: install task
+        run: |
+          echo "install task"
+          go install github.com/go-task/task/v3/cmd/task@latest
       - name: deploy goexample
         run: |
-          export TZ='Asia/Shanghai'
-          export PATH=$PATH:$(go env GOPATH)/bin
-          make docker
+          task docker
           kubectl apply -f hack/deploy/k8s/deploy.yaml
           kubectl get pods,svc,ing -n ysicing-system
       - uses: luchihoratiu/debug-via-ssh@main

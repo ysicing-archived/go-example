@@ -57,6 +57,7 @@ func initConfig() {
 		logrus.Debugf("config changed: %v", color.SGreen(in.Name))
 	})
 	if constants.Debug {
+		logrus.SetReportCaller(true)
 		viper.Set("server.debug", true)
 	}
 }

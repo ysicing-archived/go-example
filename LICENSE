@@ -1,13 +1,61 @@
-           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-                   Version 2, December 2004
+Y PUBLIC LICENSE 1.0
 
-Copyright (C) 2023 ysicing <i@ysicing.me>
+许可
 
-Everyone is permitted to copy and distribute verbatim or modified
-copies of this license document, and changing it is allowed as long
-as the name is changed.
+Y PUBLIC LICENSE 由ysicing(ysicing.me)起草,简称YPL协议。任何人均可使用该协议来发布开源软件, 原协议任何内容不得做任何修改。ysicing拥有对该协议条款的最终解释权。
 
-           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+前言:
 
- 0. You just DO WHAT THE FUCK YOU WANT TO.
+我依法拥有该软件的所有版权。本着共享开放的角度，我以开放源代码的形式发布该软件。您可以在遵守该协议的前提下使用该软件。
+
+一、免责
+
+该软件是以开放源代码的方式发行，并不表示您使用该软件无需任何费用，因此在使用该软件前，您须知晓：
+
+1.1 我没有对该软件提供任何技术支持的义务，您可联系我购买商业的技术支持。
+1.2 我对因使用该软件而产生直接或间接的任何问题不负任何责任。
+1.3 开源不等于免费，开源不等于无版权。
+
+二、使用限制
+
+2.1 使用该软件时，必须保留该软件的所有标志，不得以任何方式隐藏或遮掩任一标志
+
+三、发布基于该软件的衍生作品
+
+3.1 须保留代码里面该软件原有的所有标志
+
+四、其他
+
+4.1 本协议的最终解释权归ysicing所有
+4.2 如果上述条款无法满足您使用该软件的要求, 请联系我
+
+Y PUBLIC LICENSE 1.0
+
+Authorization
+
+Y PUBLIC LICENSE drafted by ysicing (ysicing.me), referred to as YPL agreement. Anyone can use this agreement to publish open source software, and no content of the original agreement may be modified. Ysicing has the final interpretation of the terms of this agreement.
+
+Preface:
+
+I legally own all copyrights to this software. In the spirit of sharing and openness, I am releasing this software in open source form. You can use this software under the premise of complying with this agreement.
+
+1. Disclaimer
+
+This software is distributed in open source form, which does not mean that you can use this software without any cost. Therefore, before using this software, you should know:
+
+1.1 I have no obligation to provide any technical support for this software, and you can contact me to purchase commercial technical support.
+1.2 I am not responsible for any direct or indirect problems caused by the use of this software.
+1.3 Open source does not mean free, open source does not mean no copyright.
+
+2. Use restrictions
+
+2.1 When using this software, you must retain all logos of this software, and you must not hide or cover up any logo in any way
+
+3. Release derivative works based on this software
+
+3.1 All logos of this software must be retained in the code
+
+4. Other
+
+4.1 The final interpretation of this agreement belongs to ysicing
+4.2 If the above terms cannot meet your requirements for using this software, please contact me

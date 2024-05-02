@@ -8,7 +8,7 @@ WORKDIR /go/src
 
 COPY . /go/src/
 
-RUN make build
+RUN task build
 
 FROM ysicing/debian
 
@@ -20,7 +20,7 @@ COPY example.yaml /conf/example.yaml
 
 COPY hack/ssl /opt/go/hack/ssl
 
-COPY --from=build /go/src/_output/bin/go-example /opt/go/go-example
+COPY --from=build /go/src/_output/bin/goexample /opt/go/goexample
 
 WORKDIR /opt/go
 

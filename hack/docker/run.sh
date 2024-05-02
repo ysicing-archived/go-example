@@ -4,4 +4,4 @@ if [ "$1" = "bash" ]; then
   exec /bin/bash
 fi
 
-exec /opt/go/go-example server "$@"
+exec /opt/go/goexample server "$@"

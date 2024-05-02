@@ -5,13 +5,9 @@
 package models
 
 import (
-	"fmt"
-	"os"
-	"time"
-
 	"github.com/ergoapi/util/color"
 	"github.com/ergoapi/util/exhash"
-	"github.com/ergoapi/util/rand"
+	"github.com/ergoapi/util/expass"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
@@ -75,11 +71,11 @@ func InitSalt() {
 		logrus.Infof(color.SGreen("exist salt %v success...", val))
 		return
 	}
-	content := fmt.Sprintf("%s%d%d%s", rand.RandLetters(6), os.Getpid(), time.Now().UnixNano(), rand.RandLetters(6))
+	content := expass.PwGenAlphaNumSymbols(6)
 	salt := exhash.MD5(content)
 	err = ConfigsSet("salt", salt)
 	if err != nil {
-		logrus.Fatal("init salt in mysql", err)
+		logrus.Fatal("init salt in db", err)
 	}
 	logrus.Infof(color.SGreen("create salt %v success...", salt))
 }

@@ -24,10 +24,9 @@ func GinInit() {
 			Debug:   debug,
 			Gops:    debug,
 			Pprof:   debug,
-			Cors:    true,
 			Metrics: true,
 		})
-		Gins.Use(exgin.ExLog("/swagger"), exgin.ExRecovery(), exgin.ExTraceID())
+		Gins.Use(exgin.ExLog("/swagger"), exgin.ExRecovery())
 		logrus.Debug(color.SGreen("create gin engine success..."))
 	})
 }
