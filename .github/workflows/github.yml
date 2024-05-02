@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout
+        uses: actions/checkout@v4
       - name: install kind
-        uses: helm/kind-action
+        uses: helm/kind-action@v1
       - name: install kubectl
-        uses: azure/setup-kubectl
+        uses: azure/setup-kubectl@v3
       - name: Install Go
         uses: actions/setup-go@v5
         with:
@@ -48,9 +48,9 @@ jobs:
           task docker
           kubectl apply -f hack/deploy/k8s/deploy.yaml
           kubectl get pods,svc,ing -n ysicing-system
-      - uses: luchihoratiu/debug-via-ssh@main
-        with:
-          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-          SSH_PASS: ${{ secrets.SSH_PASS }}
-          NGROK_REGION: ap
-          NGROK_TIMEOUT: 3600
+      # - uses: luchihoratiu/debug-via-ssh@main
+      #   with:
+      #     NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+      #     SSH_PASS: ${{ secrets.SSH_PASS }}
+      #     NGROK_REGION: ap
+      #     NGROK_TIMEOUT: 3600
