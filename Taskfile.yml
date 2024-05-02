@@ -17,8 +17,8 @@ vars:
   LOCAL_OS: $(go version | awk '{print $NF}')
   GOOS: $(go env GOOS)
   GOARCH: $(go env GOARCH)
-  IMAGE: ghcr.io/ysicing/goexample
-  IMAGE2: ttl.sh/ysicing/goexample
+  IMAGE: ghcr.io/ysicing/go-example
+  IMAGE2: ttl.sh/ysicing/go-example
   LDFLAGS: "-w -s \
     -X '{{.VERSION_PKG}}.gitVersion={{.BUILD_RELEASE}}' \
     -X '{{.VERSION_PKG}}.buildDate={{.BUILD_DATE}}' \
@@ -105,7 +105,7 @@ tasks:
   docker:
     desc: build docker image
     cmds:
-      - docker buildx build --pull --push -t {{.IMAGE}}:{{.BUILD_RELEASE}} -t {{.IMAGE2}}:{{.APP_VERSION}} -f hack/docker/Dockerfile .
+      - docker buildx build --pull --push -t {{.IMAGE}} -t {{.IMAGE2}} -t {{.IMAGE}}:{{.BUILD_RELEASE}} -t {{.IMAGE2}}:{{.APP_VERSION}} -f hack/docker/Dockerfile .
 
   build:
     desc: build
