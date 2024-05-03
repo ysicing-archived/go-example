@@ -45,7 +45,7 @@ jobs:
       - name: install kind
         uses: helm/kind-action@v1
       - name: install kubectl
-        uses: azure/setup-kubectl@v3
+        uses: azure/setup-kubectl@v4
       - name: deploy goexample
         run: |
           kubectl apply -f hack/deploy/k8s/deploy.yaml
