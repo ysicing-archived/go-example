@@ -13,7 +13,7 @@ require (
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.2
+	github.com/spf13/viper v1.19.0
 	github.com/storyicon/grbac v0.0.0-20200224041032-a0461737df7e
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
