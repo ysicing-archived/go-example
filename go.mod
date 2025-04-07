@@ -5,7 +5,7 @@ toolchain go1.24.1
 
 require (
 	github.com/ergoapi/util v0.8.1
-	github.com/fsnotify/fsnotify v1.8.0
+	github.com/fsnotify/fsnotify v1.9.0
 	github.com/gin-gonic/gin v1.10.0
 	github.com/glebarez/sqlite v1.11.0
 	github.com/prometheus/client_golang v1.21.1
