@@ -97,8 +97,8 @@ github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymF
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
-github.com/ergoapi/util v0.8.1 h1:HGbfpGZ/BFvN6kLV9FkKGvH4PSRBmRQ8ZanhkeyXMuk=
-github.com/ergoapi/util v0.8.1/go.mod h1:D5U/LtGe5hvF00+XANLQtePCY+/FABpUGW+QLW4Dkgw=
+github.com/ergoapi/util v0.8.4 h1:hWY061wdCNEbY/WxOvbDFEoIHu8cd5njjVUYNyZ7BJ4=
+github.com/ergoapi/util v0.8.4/go.mod h1:S8DoKnXI4+vcu6uA3+v7zPZfO1JeRtPKckn0OUM4eYM=
 github.com/frankban/quicktest v1.14.6 h1:7Xjx+VpznH+oBnejlPUj8oUpdxnVs4f8XU8WnHkI4W8=
 github.com/frankban/quicktest v1.14.6/go.mod h1:4ptaffx2x8+WTWXmUCuVU6aPUX1/Mz7zb5vbUoiM6w0=
 github.com/fsnotify/fsnotify v1.9.0 h1:2Ml+OJNzbYCTzsxtv8vKSFD9PbJjmhYF14k/jKC7S9k=
