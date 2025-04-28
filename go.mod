@@ -19,7 +19,7 @@ require (
 	github.com/swaggo/swag v1.16.4
 	gopkg.in/guregu/null.v3 v3.5.0
 	gorm.io/driver/mysql v1.5.7
-	gorm.io/gorm v1.25.12
+	gorm.io/gorm v1.26.0
 	gorm.io/plugin/prometheus v0.1.0
 )
 
