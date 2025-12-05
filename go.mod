@@ -3,7 +3,7 @@ module app
 go 1.25.3
 
 require (
-	github.com/ergoapi/util v1.2.2
+	github.com/ergoapi/util v1.2.3
 	github.com/fsnotify/fsnotify v1.9.0
 	github.com/gin-gonic/gin v1.11.0
 	github.com/glebarez/sqlite v1.11.0
